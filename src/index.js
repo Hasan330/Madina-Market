@@ -1,17 +1,17 @@
 const _ = require('lodash')
-import {ohdaValue, conversionRate, startingMoney, moneyToBeSubmitted} from './mock-data'
+import {initialOhdaValue, ohdaValue, conversionRate, startingMoney, moneyToBeSubmitted, moneyToBeKept} from './mock-data'
 import  {calculateOhda, getDiff} from './helpers';
 
-const keys   = _.keys(startingMoney);
-const values = _.values(startingMoney);
+const keys           = _.keys(startingMoney);
+const startingValues = _.values(startingMoney);
 
-let totalValue = _.zipWith(keys, values , function(key, value) {
+let convertedMoneyArray = _.zipWith(keys, startingValues , function(key, value) {
     return (key != 'JOD') ? key * value : conversionRate * value;
 });
 
-const tempOhdaArr = calculateOhda(totalValue, ohdaValue, keys, moneyToBeSubmitted);
+console.log("converted Money Array ", convertedMoneyArray)
 
-console.log(getDiff(ohdaValue, tempOhdaArr[0], tempOhdaArr[1]))
+const tempOhdaArr = calculateOhda(initialOhdaValue, startingMoney, convertedMoneyArray, ohdaValue, keys, moneyToBeSubmitted, moneyToBeKept);
 
-// console.log("Starting Money\n", startingMoney);
+console.log("Starting Money", startingMoney)
 console.log("Temp Ohda Array", tempOhdaArr)

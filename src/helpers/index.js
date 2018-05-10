@@ -1,18 +1,35 @@
-export function calculateOhda(totalValue, ohdaValue, keys, moneyToBeSubmitted) {
-    console.log('moneyToBeSubmitted ', moneyToBeSubmitted)
-    let currentOhda = 0;
-    for (let i = 0; i < totalValue.length; i++) {
-        if (currentOhda < ohdaValue) {
-            currentOhda += totalValue[i]
-        } else {
-            moneyToBeSubmitted[keys[i - 1]] = getDiff(ohdaValue, currentOhda, keys[i - 1])
-            break;
-        }
+export function calculateOhda(currentOhdaValue, startingMoney, convertedMoneyArray, ohdaValue, keys, moneyToBeSubmitted, moneyToBeKept) {
+
+    if(currentOhdaValue === ohdaValue){
+        return moneyToBeSubmitted;
     }
-    return [
-        currentOhda,
-        moneyToBeSubmitted
-    ]
+    else {
+        for (let i = 0; i < convertedMoneyArray.length; i++) {
+            if (currentOhdaValue < ohdaValue) {
+                currentOhdaValue += convertedMoneyArray[i]
+            } else {
+                let noteValue= keys[i - 1];
+                console.log("Note value is: ", noteValue)
+                let diffAmount = getDiff(ohdaValue, currentOhdaValue, noteValue);
+                
+                moneyToBeSubmitted[noteValue] = diffAmount;
+                
+                moneyToBeKept[noteValue] = startingMoney[noteValue] - diffAmount;
+                convertedMoneyArray[5] = convertedMoneyArray[5] - (noteValue * diffAmount) 
+
+                console.log("Updated convertedMoneyArray ", convertedMoneyArray);
+                console.log("Updated moneyToBeKept ", moneyToBeKept);
+
+
+                // calculateOhda(currentOhdaValue, convertedMoneyArray, ohdaValue, keys, moneyToBeSubmitted)
+                console.log(moneyToBeSubmitted);
+                break;
+            }
+        }
+
+    }
+
+   
 }
 
 export function getDiff(ohdaValue, currentValue, noteValue){
