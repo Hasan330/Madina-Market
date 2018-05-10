@@ -1,1 +1,2 @@
-# Madina-Market
+## EntryPoint 
+` npm start `
