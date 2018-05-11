@@ -83,7 +83,7 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
     try {
         keys.map((note, index) => {  
             // console.log("\nNote is: ", note, "difference is", difference);
-            numberOfNotesToTake = (note != 0 && note != 'JOD') ?  Math.floor(difference / note) : (note == 'JOD') ? 0.1 : Math.floor(difference / 0.5) 
+            numberOfNotesToTake = (note != 0 && note != 'JOD' && note != 'USD') ?  Math.floor(difference / note) : (note == 'JOD' || 'USD') ? 0.1 : Math.floor(difference / 0.5) 
             // console.log("******* Number of notes to take --> ", note, "--> ", numberOfNotesToTake)
             
             if(Number(numberOfNotesToTake) >= 1 ){
@@ -126,7 +126,7 @@ export function convertMoneyObjToValuesArray(moneyObj, conversionRate){
     const values     = _.values(moneyObj);
 
     return _.zipWith(keys, values , function(key, value) {
-        return (key != 'JOD') ? (key != 0) ? key * value : 0.5 * value : conversionRate * value;
+        return (key != 'JOD' && key != 'USD') ? (key != 0) ? key * value : 0.5 * value : conversionRate[key] * value;
         });
 }
 
@@ -146,7 +146,7 @@ export function findSum(moneyObject, conversionRate){
     const total = moneyArr.reduce((sum, value) => {
         return sum + value;
     }, 0)
-    console.log("Total is: ", total);
+    return total;
 }
 
 function getArrayIndexFromNoteValue(noteValue) {

@@ -1,9 +1,13 @@
 export var ohdaValue = 1000;
-export var conversionRate = 5.2;
+export var conversionRate = {
+    JOD: 5.2,
+    USD : 3.6
+}
 
 export var initialOhdaValue = 0;
 
 export const startingMoneyObj = {
+    USD: 20,
     JOD: 50,
     200: 6,
     100: 11,
@@ -17,6 +21,7 @@ export const startingMoneyObj = {
 }
 
 export const moneyToBeSubmittedObj = {
+    USD: 0,
     JOD: 0,
     200: 0,
     100: 0,
@@ -30,6 +35,7 @@ export const moneyToBeSubmittedObj = {
 }
 
 export const moneyToBeKeptObj = {
+    USD: 0,
     JOD: 0,
     200: 0,
     100: 0,
