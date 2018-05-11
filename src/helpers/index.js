@@ -7,14 +7,16 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
     // console.log("Starting Money\n", startingMoneyObj)
     const keys = _.keys(startingMoneyObj);
 
-    for (let i = 0; i < convertedMoneyArray.length; i++) {
+    // convertedMoneyArray
+
+    convertedMoneyArray.forEach( (element, i) => {
         // currentMoneyToBeKeptValue is still less than the ohda 
         if (currentMoneyToBeKeptValue < moneyToBeKeptValue) {
             let noteValue = keys[i];
             moneyToBeKeptObj[noteValue] = getValueAtCertainPoint(noteValue, startingMoneyObj)
-            currentMoneyToBeKeptValue += convertedMoneyArray[i]
+            currentMoneyToBeKeptValue += element
 
-            console.log("Adding to ohda value ", convertedMoneyArray[i])
+            console.log("Adding to ohda value ", element)
             console.log("Current ohda value inside if is: ", currentMoneyToBeKeptValue)
             // console.log("Updated moneyToBeKeptObj 1 "       , moneyToBeKeptObj);
         }
@@ -38,13 +40,12 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
             // console.log("Updated convertedMoneyArray ", convertedMoneyArray);
             // console.log("Updated moneyToBeKeptObj \n", moneyToBeKeptObj);
             // console.log("Updated moneyToBeSubmittedObj 2 \n", moneyToBeSubmittedObj);
-
-            console.log(convertMoneyObjToValuesArray(moneyToBeKeptObj, conversionRate))
+            // console.log(convertMoneyObjToValuesArray(moneyToBeKeptObj, conversionRate))
 
             currentMoneyToBeKeptValue = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
-            break;
+            // break;
         }
-    }
+    })
     return moneyToBeKeptObj;
 }
 
