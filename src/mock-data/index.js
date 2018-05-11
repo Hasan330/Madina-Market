@@ -4,8 +4,6 @@ export var conversionRate = {
     USD : 3.6
 }
 
-export var initialOhdaValue = 0;
-
 export const startingMoneyObj = {
     USD: 22,
     JOD: 70,

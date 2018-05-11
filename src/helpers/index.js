@@ -1,10 +1,11 @@
 const _ = require('lodash');
 
-export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeKeptObj) {
+export function calculateOhda(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate ) {
 
-    let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
-    const keys = _.keys(startingMoneyObj);
-
+    let currentMoneyToBeKeptValue = 0;
+    let convertedMoneyArray       = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
+    const keys                    = _.keys(startingMoneyObj);
+    
     for (let i = 0; i < convertedMoneyArray.length; i++) {
         const currentMoneyLessThanIntended   = (currentMoneyToBeKeptValue < moneyToBeKeptValue) ? true: false
         if (currentMoneyLessThanIntended) {
