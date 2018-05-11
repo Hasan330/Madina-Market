@@ -47,7 +47,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
 
                 console.log(convertMoneyObjToValuesArray(moneyToBeKeptObj, conversionRate))
 
-                removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
+                currentMoneyToBeKeptValue = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
                 // calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj)
                 
                 // TODO: Set the value of all moneyNotes greater than the index we are on to 0 in moneyToBeKept (momken ma ylzam !!)
@@ -66,12 +66,13 @@ function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmitte
         console.log("Difference is: ", difference);
 
         // 1) Specify which note is the note you should take from (difference / note  > 1 )
-        difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference)
+        difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference, currentMoneyToBeKeptValue)
         console.log(`Difference now is: ${difference}`)
     }
+    return currentMoneyToBeKeptValue; 
 }
 
-function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference){
+function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference, currentMoneyToBeKeptValue){
     let keys   = _.reverse(_.keys(startingMoneyObj));
     let values = _.reverse(_.values(startingMoneyObj));
     let returnedValue;
@@ -96,6 +97,7 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
                 
                 let amountDeducted =  (note != 0) ? notesToBeTaken * note: notesToBeTaken * 0.5;
                 returnedValue = difference - amountDeducted
+                currentMoneyToBeKeptValue += amountDeducted;
 
                 console.log("Money to be kept objoect has been updated\n", moneyToBeKeptObj);
                // throw (note == 0) ? "Other exception": BreakException;
