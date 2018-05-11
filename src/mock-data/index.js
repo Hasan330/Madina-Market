@@ -4,6 +4,7 @@ export var conversionRate = 5.2;
 export var initialOhdaValue = 0;
 
 export const startingMoney = {
+    JOD: 50,
     200: 6,
     100: 12,
     50: 8,
@@ -12,11 +13,12 @@ export const startingMoney = {
     5: 24,
     2: 13,
     1: 61,
-    0.5: 13,
-    JOD: 51.3
+    0: 13
+  
 }
 
 export const moneyToBeSubmitted = {
+    JOD: 0,
     200: 0,
     100: 0,
     50: 0,
@@ -25,11 +27,11 @@ export const moneyToBeSubmitted = {
     5: 0,
     2: 0,
     1: 0,
-    0.5: 0,
-    JOD: 0
+    0: 0
 }
 
 export const moneyToBeKept = {
+    JOD: 0,
     200: 0,
     100: 0,
     50: 0,
@@ -38,6 +40,5 @@ export const moneyToBeKept = {
     5: 0,
     2: 0,
     1: 0,
-    0.5: 0,
-    JOD: 0
+    0: 0
 }

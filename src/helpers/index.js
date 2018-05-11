@@ -1,43 +1,51 @@
 const _ = require('lodash');
 
-export function calculateOhda(currentOhdaValue, startingMoney, conversionRate, ohdaValue, moneyToBeSubmitted, moneyToBeKept) {
+export function calculateOhda(currentMoneyToBeKeptValue, startingMoney, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj) {
 
     console.log("converted Money Array ", convertedMoneyArray)
     let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoney, conversionRate)
     console.log("Starting Money", startingMoney)
     const keys              = _.keys(startingMoney);
 
-    if(currentOhdaValue === ohdaValue){
-        return moneyToBeSubmitted;
+    if(currentMoneyToBeKeptValue === moneyToBeKeptValue){
+        console.log("Ohda complete!!")
+        return moneyToBeSubmittedObj;
     }
     else {
         for (let i = 0; i < convertedMoneyArray.length; i++) {
-            if (currentOhdaValue < ohdaValue) {
+            if (currentMoneyToBeKeptValue < moneyToBeKeptValue) {
+
+                // TODO: Add number of notes to be sent to moneyToBeKeptObj 
+
+                let noteValue = keys[i];
+                console.log("Note value to be added to moneyToBeKeptObj is: ", noteValue)
+
+
                 console.log("Adding to ohda value ", convertedMoneyArray[i])
-                currentOhdaValue += convertedMoneyArray[i]
-                console.log("Current ohda value inside if is: ", currentOhdaValue)
+                currentMoneyToBeKeptValue += convertedMoneyArray[i]
+                // moneyToBeKeptObj
+                console.log("Current ohda value inside if is: ", currentMoneyToBeKeptValue)
 
             } else {
-                console.log("Current ohda value inside else 1 is: ", currentOhdaValue)
+                console.log("Current ohda value inside else 1 is: ", currentMoneyToBeKeptValue)
                 
-
                 let noteValue = keys[i - 1];
                 console.log("Note value is: ", noteValue)
-                let diffAmount = getDiff(ohdaValue, currentOhdaValue, noteValue);
+                let diffAmount = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
                 
-                moneyToBeSubmitted[noteValue] = diffAmount;
-                moneyToBeKept[noteValue]      = startingMoney[noteValue] - diffAmount;
+                moneyToBeSubmittedObj[noteValue] = diffAmount;
+                moneyToBeKeptObj[noteValue]      = startingMoney[noteValue] - diffAmount;
 
                 let index                  = getArrayIndexFromNoteValue(noteValue);
                 convertedMoneyArray[index] = convertedMoneyArray[index] - (noteValue * diffAmount) 
-                currentOhdaValue -= (noteValue * diffAmount);
+                currentMoneyToBeKeptValue -= (noteValue * diffAmount);
                 
-                console.log("Current ohda value inside else 2 is: ", currentOhdaValue)
+                console.log("Current ohda value inside else 2 is: ", currentMoneyToBeKeptValue)
                 console.log("Updated convertedMoneyArray ", convertedMoneyArray);
-                console.log("Updated moneyToBeKept ", moneyToBeKept);
-                console.log("Updated moneyToBeSubmitted ", moneyToBeSubmitted);
+                console.log("Updated moneyToBeKeptObj ", moneyToBeKeptObj);
+                console.log("Updated moneyToBeSubmittedObj ", moneyToBeSubmittedObj);
 
-                // calculateOhda(currentOhdaValue, convertedMoneyArray, ohdaValue, keys, moneyToBeSubmitted)
+                // calculateOhda(currentMoneyToBeKeptValue, convertedMoneyArray, moneyToBeKeptValue, keys, moneyToBeSubmitted)
                 break;
             }
         }
@@ -48,13 +56,17 @@ export function getDiff(ohdaValue, currentValue, noteValue){
 	return Math.floor((currentValue - ohdaValue) / noteValue);
 }
 
+function getValueAtCertainPoint(moneyObj, index, conversionRate){
+    return 1;
+}
+
 function convertMoneyObjToValuesArray(moneyObj, conversionRate){
     console.log("Conversion rate in function is: ", conversionRate)
     const keys       = _.keys(moneyObj);
     const values     = _.values(moneyObj);
 
     return _.zipWith(keys, values , function(key, value) {
-        return (key != 'JOD') ? key * value : conversionRate * value;
+        return (key != 'JOD') ? (key != 0) ? key * value : 0.5 * value : conversionRate * value;
         });
 }
 
@@ -96,11 +108,8 @@ function getArrayIndexFromNoteValue(noteValue) {
             console.log('returing index 8')
             return 8;
             break;
-        
         default:
             console.log('returing index default')
-
-            // statements_def
             break;
     }
 }
