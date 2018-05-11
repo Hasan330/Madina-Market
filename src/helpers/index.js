@@ -21,7 +21,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
 
         // currentMoneyToBeKeptValue is now greater than ohda, remove from it
         else {
-            console.log("Current ohda value inside else 1 is: ", currentMoneyToBeKeptValue)
+            // console.log("Current ohda value inside else 1 is: ", currentMoneyToBeKeptValue)
 
             let noteValue = keys[i - 1];
             // console.log("Note value is: ", noteValue)
@@ -35,17 +35,13 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
             currentMoneyToBeKeptValue -= (noteValue * diffAmount);
 
             // console.log("Current ohda value inside else 2 is: ", currentMoneyToBeKeptValue)
-            console.log("Updated convertedMoneyArray ", convertedMoneyArray);
-            console.log("Updated moneyToBeKeptObj \n", moneyToBeKeptObj);
-            console.log("Updated moneyToBeSubmittedObj 2 \n", moneyToBeSubmittedObj);
+            // console.log("Updated convertedMoneyArray ", convertedMoneyArray);
+            // console.log("Updated moneyToBeKeptObj \n", moneyToBeKeptObj);
+            // console.log("Updated moneyToBeSubmittedObj 2 \n", moneyToBeSubmittedObj);
 
             console.log(convertMoneyObjToValuesArray(moneyToBeKeptObj, conversionRate))
 
             currentMoneyToBeKeptValue = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
-            // calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj)
-
-            // TODO: Set the value of all moneyNotes greater than the index we are on to 0 in moneyToBeKept (momken ma ylzam !!)
-
             break;
         }
     }

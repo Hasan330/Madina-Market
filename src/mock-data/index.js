@@ -7,8 +7,8 @@ export var conversionRate = {
 export var initialOhdaValue = 0;
 
 export const startingMoneyObj = {
-    USD: 20,
-    JOD: 50,
+    USD: 22,
+    JOD: 70,
     200: 6,
     100: 11,
     50: 8,
