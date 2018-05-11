@@ -68,13 +68,6 @@ function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmitte
         // 1) Specify which note is the note you should take from (difference / note  > 1 )
         difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference)
         console.log(`Difference now is: ${difference}`)
-
-
-        // 2) Set (value - floor(difference / note)) to moneyToBeKeptObj and make sure there is enough notes from that billAmount to accomodate 
-        // 3) repeat
-
-
-        break;
     }
 }
 
@@ -83,25 +76,33 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
     let values = _.reverse(_.values(startingMoneyObj));
     let returnedValue;
     var BreakException = {};
+    let numberOfNotesToTake;
 
     try {
         keys.map((note, index) => {
-            let numberOfNotesToTake = Math.floor(difference / note)
-            if(numberOfNotesToTake >= 1  && values[index]){
-                console.log(`Note we could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
+            
+            console.log("\nNote is: ", note, "difference is", difference);
+            numberOfNotesToTake = (note != 0 && note != 'JOD') ?  Math.floor(difference / note) : (note == 'JOD') ? 0.1 : Math.floor(difference / 0.5) 
+            console.log("******* Number of notes to take --> ", note, "--> ", numberOfNotesToTake)
+            
+
+            if(Number(numberOfNotesToTake) >= 1 ){
+                console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
                 
                 //Take all notes needed if you can, if not take available ones
                 const notesToBeTaken = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index];
+                console.log("NOtes to be taken --> ", notesToBeTaken)
                 moneyToBeKeptObj[note] -=  notesToBeTaken;
                 
-                let amountDeducted =  notesToBeTaken * note;
+                let amountDeducted =  (note != 0) ? notesToBeTaken * note: notesToBeTaken * 0.5;
                 returnedValue = difference - amountDeducted
 
                 console.log("Money to be kept objoect has been updated\n", moneyToBeKeptObj);
-                throw BreakException;
+               // throw (note == 0) ? "Other exception": BreakException;
+               throw BreakException;
             }
             else {
-                console.log(`Error: we can't devide ${difference} by ${note} at index ${index} --> ${values[index]} to get ${difference/ note}`)
+                console.log(`Error: we can't devide ${difference} by ${note} at index ${index} --> ${values[index]} to get ${numberOfNotesToTake}`)
             }
         });
     } catch (e) {
