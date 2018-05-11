@@ -61,13 +61,13 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
 
 function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue){
     //Keep removing money notes until current ohda (currentMoneyToBeKeptValue) matches 1000
-    while(currentMoneyToBeKeptValue - moneyToBeKeptValue > 0){
-        let difference = currentMoneyToBeKeptValue - moneyToBeKeptValue;
+    let difference = currentMoneyToBeKeptValue - moneyToBeKeptValue;
+    while(Number(difference) > 0){
         console.log("Difference is: ", difference);
 
         // 1) Specify which note is the note you should take from (difference / note  > 1 )
-        let numberOfNotesToTake = specifyNoteToSubtractFrom(startingMoneyObj, difference)
-        console.log(`Number of notes to take is ${numberOfNotesToTake}`)
+        difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference)
+        console.log(`Difference now is: ${difference}`)
 
 
         // 2) Set (value - floor(difference / note)) to moneyToBeKeptObj and make sure there is enough notes from that billAmount to accomodate 
@@ -78,7 +78,7 @@ function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmitte
     }
 }
 
-function specifyNoteToSubtractFrom(startingMoneyObj, difference){
+function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference){
     let keys   = _.reverse(_.keys(startingMoneyObj));
     let values = _.reverse(_.values(startingMoneyObj));
     let returnedValue;
@@ -91,7 +91,13 @@ function specifyNoteToSubtractFrom(startingMoneyObj, difference){
                 console.log(`Note we could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
                 
                 //Take all notes needed if you can, if not take available ones
-                returnedValue = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index];
+                const notesToBeTaken = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index];
+                moneyToBeKeptObj[note] -=  notesToBeTaken;
+                
+                let amountDeducted =  notesToBeTaken * note;
+                returnedValue = difference - amountDeducted
+
+                console.log("Money to be kept objoect has been updated\n", moneyToBeKeptObj);
                 throw BreakException;
             }
             else {
