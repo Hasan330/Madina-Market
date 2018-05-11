@@ -21,7 +21,6 @@ export function calculateOhda(currentOhdaValue, startingMoney, convertedMoneyArr
                 console.log("Updated convertedMoneyArray ", convertedMoneyArray);
                 console.log("Updated moneyToBeKept ", moneyToBeKept);
 
-
                 // calculateOhda(currentOhdaValue, convertedMoneyArray, ohdaValue, keys, moneyToBeSubmitted)
                 console.log(moneyToBeSubmitted);
                 break;
@@ -33,7 +32,6 @@ export function calculateOhda(currentOhdaValue, startingMoney, convertedMoneyArr
 export function getDiff(ohdaValue, currentValue, noteValue){
 	return Math.floor((currentValue - ohdaValue) / noteValue);
 }
-
 
 function getArrayIndexFromNoteValue(noteValue) {
     switch (noteValue) {
