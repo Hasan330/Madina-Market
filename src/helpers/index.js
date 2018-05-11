@@ -30,7 +30,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
                 console.log("Current ohda value inside else 1 is: ", currentMoneyToBeKeptValue)
                 
                 let noteValue = keys[i - 1];
-                console.log("Note value is: ", noteValue)
+                // console.log("Note value is: ", noteValue)
                 let diffAmount = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
                 
                 moneyToBeSubmittedObj[noteValue] = diffAmount;
@@ -40,7 +40,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
                 convertedMoneyArray[index] = convertedMoneyArray[index] - (noteValue * diffAmount) 
                 currentMoneyToBeKeptValue -= (noteValue * diffAmount);
                 
-                console.log("Current ohda value inside else 2 is: ", currentMoneyToBeKeptValue)
+                // console.log("Current ohda value inside else 2 is: ", currentMoneyToBeKeptValue)
                 console.log("Updated convertedMoneyArray "         , convertedMoneyArray);
                 console.log("Updated moneyToBeKeptObj \n"          , moneyToBeKeptObj);
                 console.log("Updated moneyToBeSubmittedObj 2 \n"   , moneyToBeSubmittedObj);
@@ -56,6 +56,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
             }
         }
     }
+    return moneyToBeKeptObj;
 }
 
 
@@ -80,13 +81,11 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
     let numberOfNotesToTake;
 
     try {
-        keys.map((note, index) => {
-            
-            console.log("\nNote is: ", note, "difference is", difference);
+        keys.map((note, index) => {  
+            // console.log("\nNote is: ", note, "difference is", difference);
             numberOfNotesToTake = (note != 0 && note != 'JOD') ?  Math.floor(difference / note) : (note == 'JOD') ? 0.1 : Math.floor(difference / 0.5) 
-            console.log("******* Number of notes to take --> ", note, "--> ", numberOfNotesToTake)
+            // console.log("******* Number of notes to take --> ", note, "--> ", numberOfNotesToTake)
             
-
             if(Number(numberOfNotesToTake) >= 1 ){
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
                 
@@ -100,7 +99,6 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
                 currentMoneyToBeKeptValue += amountDeducted;
 
                 console.log("Money to be kept objoect has been updated\n", moneyToBeKeptObj);
-               // throw (note == 0) ? "Other exception": BreakException;
                throw BreakException;
             }
             else {
@@ -123,14 +121,32 @@ function getValueAtCertainPoint(noteValue, moneyObj){
     return moneyObj[noteValue];
 }
 
-function convertMoneyObjToValuesArray(moneyObj, conversionRate){
-    console.log("Conversion rate in function is: ", conversionRate)
+export function convertMoneyObjToValuesArray(moneyObj, conversionRate){
     const keys       = _.keys(moneyObj);
     const values     = _.values(moneyObj);
 
     return _.zipWith(keys, values , function(key, value) {
         return (key != 'JOD') ? (key != 0) ? key * value : 0.5 * value : conversionRate * value;
         });
+}
+
+export function getMoneyToBeSubmitted(startingMoneyObj, moneyToBeKeptObj){
+    const keys              = _.keys(startingMoneyObj);
+    let moneyToBeSubmittedObj = {}
+    keys.forEach( key => {
+        moneyToBeSubmittedObj[key] = startingMoneyObj[key] - moneyToBeKeptObj[key]
+    })
+
+
+    return moneyToBeSubmittedObj;
+}
+
+export function findSum(moneyObject, conversionRate){
+    var moneyArr = convertMoneyObjToValuesArray(moneyObject, conversionRate);
+    const total = moneyArr.reduce((sum, value) => {
+        return sum + value;
+    }, 0)
+    console.log("Total is: ", total);
 }
 
 function getArrayIndexFromNoteValue(noteValue) {

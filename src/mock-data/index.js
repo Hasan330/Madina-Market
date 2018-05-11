@@ -3,7 +3,7 @@ export var conversionRate = 5.2;
 
 export var initialOhdaValue = 0;
 
-export const startingMoney = {
+export const startingMoneyObj = {
     JOD: 50,
     200: 6,
     100: 11,
@@ -13,11 +13,10 @@ export const startingMoney = {
     5: 24,
     2: 13,
     1: 61,
-    0: 13
-  
+    0: 13  
 }
 
-export const moneyToBeSubmitted = {
+export const moneyToBeSubmittedObj = {
     JOD: 0,
     200: 0,
     100: 0,
@@ -30,7 +29,7 @@ export const moneyToBeSubmitted = {
     0: 0
 }
 
-export const moneyToBeKept = {
+export const moneyToBeKeptObj = {
     JOD: 0,
     200: 0,
     100: 0,
