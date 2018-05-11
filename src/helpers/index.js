@@ -6,18 +6,18 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
     const keys = _.keys(startingMoneyObj);
 
     for (let i = 0; i < convertedMoneyArray.length; i++) {
-        // currentMoneyToBeKeptValue is still less than the ohda 
-        if (currentMoneyToBeKeptValue < moneyToBeKeptValue) {
-            let noteValue               = keys[i];
-            moneyToBeKeptObj[noteValue] = getValueAtCertainPoint(noteValue, startingMoneyObj)
-            currentMoneyToBeKeptValue  += convertedMoneyArray[i]
-        }
+        const currentMoneyLessThanIntended   = (currentMoneyToBeKeptValue < moneyToBeKeptValue) ? true: false
+        if (currentMoneyLessThanIntended) {
+            
+            let noteValue                    = keys[i];
+            moneyToBeKeptObj[noteValue]      = getValueAtCertainPoint(noteValue, startingMoneyObj)
+            currentMoneyToBeKeptValue       += convertedMoneyArray[i]
+        
+        }else {
 
-        // currentMoneyToBeKeptValue is now greater than ohda, remove from it
-        else {
-            const noteValue  = keys[i - 1];
-            const diffAmount = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
-            const index      = getArrayIndexFromNoteValue(noteValue);
+            const noteValue                  = keys[i - 1];
+            const diffAmount                 = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
+            const index                      = getArrayIndexFromNoteValue(noteValue);
 
             moneyToBeSubmittedObj[noteValue] = diffAmount;
             moneyToBeKeptObj[noteValue]      = startingMoneyObj[noteValue] - diffAmount;
@@ -33,9 +33,8 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
 
 
 function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue) {
-    //Keep removing money notes until current ohda (currentMoneyToBeKeptValue) matches 1000
     let difference = currentMoneyToBeKeptValue - moneyToBeKeptValue;
-    while (Number(difference) > 0) {
+    while (difference > 0) {
         difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference, currentMoneyToBeKeptValue)
         console.log(`Difference now is: ${difference}`)
     }
@@ -56,8 +55,7 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
             if (Number(numberOfNotesToTake) >= 1) {
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
 
-                //Take all notes needed if you can, if not take available ones
-                const notesToBeTaken       = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index];
+                const notesToBeTaken       = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index]; //Take all notes needed if you can, if not take available ones
                 const amountDeducted       = (note != 0) ? notesToBeTaken * note : notesToBeTaken * 0.5;
 
                 moneyToBeKeptObj[note]    -= notesToBeTaken;
@@ -94,12 +92,13 @@ export function convertMoneyObjToValuesArray(moneyObj, conversionRate) {
 }
 
 export function getMoneyToBeSubmitted(startingMoneyObj, moneyToBeKeptObj) {
-    const keys                = _.keys(startingMoneyObj);
-    let moneyToBeSubmittedObj = {}
+    const keys                  = _.keys(startingMoneyObj);
+    const moneyToBeSubmittedObj = {}
+    
     keys.forEach(key => {
         moneyToBeSubmittedObj[key] = startingMoneyObj[key] - moneyToBeKeptObj[key]
     })
-
+    
     return moneyToBeSubmittedObj;
 }
 
