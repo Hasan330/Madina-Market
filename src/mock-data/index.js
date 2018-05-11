@@ -6,10 +6,10 @@ export var initialOhdaValue = 0;
 export const startingMoney = {
     JOD: 50,
     200: 6,
-    100: 12,
+    100: 11,
     50: 8,
     20: 3,
-    10: 46,
+    10: 52,
     5: 24,
     2: 13,
     1: 61,

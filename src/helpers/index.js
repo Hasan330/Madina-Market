@@ -1,32 +1,32 @@
 const _ = require('lodash');
 
-export function calculateOhda(currentMoneyToBeKeptValue, startingMoney, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj) {
+export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj) {
 
+    let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
     console.log("converted Money Array ", convertedMoneyArray)
-    let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoney, conversionRate)
-    console.log("Starting Money", startingMoney)
-    const keys              = _.keys(startingMoney);
+    console.log("Starting Money\n", startingMoneyObj)
+    const keys              = _.keys(startingMoneyObj);
 
+    // Ohda Complete
     if(currentMoneyToBeKeptValue === moneyToBeKeptValue){
         console.log("Ohda complete!!")
         return moneyToBeSubmittedObj;
     }
     else {
         for (let i = 0; i < convertedMoneyArray.length; i++) {
+            // currentMoneyToBeKeptValue is still less than the ohda 
             if (currentMoneyToBeKeptValue < moneyToBeKeptValue) {
-
-                // TODO: Add number of notes to be sent to moneyToBeKeptObj 
-
                 let noteValue = keys[i];
-                console.log("Note value to be added to moneyToBeKeptObj is: ", noteValue)
-
-
-                console.log("Adding to ohda value ", convertedMoneyArray[i])
+                moneyToBeKeptObj[noteValue] = getValueAtCertainPoint(noteValue, startingMoneyObj)
                 currentMoneyToBeKeptValue += convertedMoneyArray[i]
-                // moneyToBeKeptObj
-                console.log("Current ohda value inside if is: ", currentMoneyToBeKeptValue)
 
-            } else {
+                console.log("Adding to ohda value "             , convertedMoneyArray[i])
+                console.log("Current ohda value inside if is: " , currentMoneyToBeKeptValue)
+                // console.log("Updated moneyToBeKeptObj 1 "       , moneyToBeKeptObj);
+            } 
+
+            // currentMoneyToBeKeptValue is now greater than ohda, remove from it
+            else {
                 console.log("Current ohda value inside else 1 is: ", currentMoneyToBeKeptValue)
                 
                 let noteValue = keys[i - 1];
@@ -34,30 +34,84 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoney, conversi
                 let diffAmount = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
                 
                 moneyToBeSubmittedObj[noteValue] = diffAmount;
-                moneyToBeKeptObj[noteValue]      = startingMoney[noteValue] - diffAmount;
+                moneyToBeKeptObj[noteValue]      = startingMoneyObj[noteValue] - diffAmount;
 
                 let index                  = getArrayIndexFromNoteValue(noteValue);
                 convertedMoneyArray[index] = convertedMoneyArray[index] - (noteValue * diffAmount) 
                 currentMoneyToBeKeptValue -= (noteValue * diffAmount);
                 
                 console.log("Current ohda value inside else 2 is: ", currentMoneyToBeKeptValue)
-                console.log("Updated convertedMoneyArray ", convertedMoneyArray);
-                console.log("Updated moneyToBeKeptObj ", moneyToBeKeptObj);
-                console.log("Updated moneyToBeSubmittedObj ", moneyToBeSubmittedObj);
+                console.log("Updated convertedMoneyArray "         , convertedMoneyArray);
+                console.log("Updated moneyToBeKeptObj \n"          , moneyToBeKeptObj);
+                console.log("Updated moneyToBeSubmittedObj 2 \n"   , moneyToBeSubmittedObj);
 
-                // calculateOhda(currentMoneyToBeKeptValue, convertedMoneyArray, moneyToBeKeptValue, keys, moneyToBeSubmitted)
+                console.log(convertMoneyObjToValuesArray(moneyToBeKeptObj, conversionRate))
+
+                removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
+                // calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj)
+                
+                // TODO: Set the value of all moneyNotes greater than the index we are on to 0 in moneyToBeKept (momken ma ylzam !!)
+
                 break;
             }
         }
     }
 }
 
-export function getDiff(ohdaValue, currentValue, noteValue){
+
+function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue){
+    //Keep removing money notes until current ohda (currentMoneyToBeKeptValue) matches 1000
+    while(currentMoneyToBeKeptValue - moneyToBeKeptValue > 0){
+        let difference = currentMoneyToBeKeptValue - moneyToBeKeptValue;
+        console.log("Difference is: ", difference);
+
+        // 1) Specify which note is the note you should take from (difference / note  > 1 )
+        let numberOfNotesToTake = specifyNoteToSubtractFrom(startingMoneyObj, difference)
+        console.log(`Number of notes to take is ${numberOfNotesToTake}`)
+
+
+        // 2) Set (value - floor(difference / note)) to moneyToBeKeptObj and make sure there is enough notes from that billAmount to accomodate 
+        // 3) repeat
+
+
+        break;
+    }
+}
+
+function specifyNoteToSubtractFrom(startingMoneyObj, difference){
+    let keys   = _.reverse(_.keys(startingMoneyObj));
+    let values = _.reverse(_.values(startingMoneyObj));
+    let returnedValue;
+    var BreakException = {};
+
+    try {
+        keys.map((note, index) => {
+            let numberOfNotesToTake = Math.floor(difference / note)
+            if(numberOfNotesToTake >= 1  && values[index]){
+                console.log(`Note we could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
+                
+                //Take all notes needed if you can, if not take available ones
+                returnedValue = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index];
+                throw BreakException;
+            }
+            else {
+                console.log(`Error: we can't devide ${difference} by ${note} at index ${index} --> ${values[index]} to get ${difference/ note}`)
+            }
+        });
+    } catch (e) {
+        if (e !== BreakException) throw e;
+    }
+    
+    return returnedValue;
+}
+
+
+function getDiff(ohdaValue, currentValue, noteValue){
 	return Math.floor((currentValue - ohdaValue) / noteValue);
 }
 
-function getValueAtCertainPoint(moneyObj, index, conversionRate){
-    return 1;
+function getValueAtCertainPoint(noteValue, moneyObj){
+    return moneyObj[noteValue];
 }
 
 function convertMoneyObjToValuesArray(moneyObj, conversionRate){
