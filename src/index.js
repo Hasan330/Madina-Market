@@ -1,8 +1,8 @@
 const _ = require('lodash')
-import {initialOhdaValue, ohdaValue, conversionRate, startingMoneyObj, moneyToBeSubmittedObj, moneyToBeKeptObj} from './mock-data'
+import {initialOhdaValue, ohdaValue, conversionRate, startingMoneyObj, moneyToBeKeptObj} from './mock-data'
 import  {calculateOhda, convertMoneyObjToValuesArray, getMoneyToBeSubmitted, findSum} from './helpers';
 
-const ohdaObj           = calculateOhda(initialOhdaValue, startingMoneyObj, conversionRate, ohdaValue, moneyToBeSubmittedObj, moneyToBeKeptObj);
+const ohdaObj           = calculateOhda(initialOhdaValue, startingMoneyObj, conversionRate, ohdaValue, moneyToBeKeptObj);
 const ohdaArr           = convertMoneyObjToValuesArray(ohdaObj, conversionRate);
 
 const submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, ohdaObj)

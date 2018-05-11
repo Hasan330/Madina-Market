@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeSubmittedObj, moneyToBeKeptObj) {
+export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conversionRate, moneyToBeKeptValue, moneyToBeKeptObj) {
 
     let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
     const keys = _.keys(startingMoneyObj);
@@ -14,16 +14,14 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
             currentMoneyToBeKeptValue       += convertedMoneyArray[i]
         
         }else {
-
             const noteValue                  = keys[i - 1];
             const diffAmount                 = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
             const index                      = getArrayIndexFromNoteValue(noteValue);
 
-            moneyToBeSubmittedObj[noteValue] = diffAmount;
             moneyToBeKeptObj[noteValue]      = startingMoneyObj[noteValue] - diffAmount;
             convertedMoneyArray[index]      -= (noteValue * diffAmount);
             currentMoneyToBeKeptValue       -= (noteValue * diffAmount);
-            currentMoneyToBeKeptValue        = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
+            currentMoneyToBeKeptValue        = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
             
             break;
         }
@@ -32,7 +30,7 @@ export function calculateOhda(currentMoneyToBeKeptValue, startingMoneyObj, conve
 }
 
 
-function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeSubmittedObj, currentMoneyToBeKeptValue, moneyToBeKeptValue) {
+function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, currentMoneyToBeKeptValue, moneyToBeKeptValue) {
     let difference = currentMoneyToBeKeptValue - moneyToBeKeptValue;
     while (difference > 0) {
         difference = specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference, currentMoneyToBeKeptValue)
@@ -98,7 +96,7 @@ export function getMoneyToBeSubmitted(startingMoneyObj, moneyToBeKeptObj) {
     keys.forEach(key => {
         moneyToBeSubmittedObj[key] = startingMoneyObj[key] - moneyToBeKeptObj[key]
     })
-    
+
     return moneyToBeSubmittedObj;
 }
 

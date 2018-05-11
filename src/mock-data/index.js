@@ -20,20 +20,6 @@ export const startingMoneyObj = {
     0: 13  
 }
 
-export const moneyToBeSubmittedObj = {
-    USD: 0,
-    JOD: 0,
-    200: 0,
-    100: 0,
-    50: 0,
-    20: 0,
-    10: 0,
-    5: 0,
-    2: 0,
-    1: 0,
-    0: 0
-}
-
 export const moneyToBeKeptObj = {
     USD: 0,
     JOD: 0,
