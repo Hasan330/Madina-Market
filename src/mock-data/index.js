@@ -12,6 +12,7 @@ export const startingMoney = {
     5: 24,
     2: 13,
     1: 61,
+    0.5: 13,
     JOD: 51.3
 }
 
@@ -24,6 +25,7 @@ export const moneyToBeSubmitted = {
     5: 0,
     2: 0,
     1: 0,
+    0.5: 0,
     JOD: 0
 }
 
@@ -36,5 +38,6 @@ export const moneyToBeKept = {
     5: 0,
     2: 0,
     1: 0,
+    0.5: 0,
     JOD: 0
 }
