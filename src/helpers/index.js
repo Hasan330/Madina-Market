@@ -49,7 +49,7 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
 
     try {
         keys.map((note, index) => {
-            numberOfNotesToTake = (note && values[index] && note != 0 && note != 'JOD' && note != 'USD') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
+            numberOfNotesToTake = (values[index] && note != 0 && note != 'JOD' && note != 'JOD2' && note != 'USD' && note != 'USD2') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || note == 'USD2' || note == 'JOD2' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
 
             if (Number(numberOfNotesToTake) >= 1) {
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
@@ -86,7 +86,7 @@ export function convertMoneyObjToValuesArray(moneyObj, conversionRate) {
     const values = _.values(moneyObj);
 
     return _.zipWith(keys, values, function(key, value) {
-        return (key != 'JOD' && key != 'USD') ? (key != 0) ? key * value : 0.5 * value : conversionRate[key] * value;
+        return (key != 'JOD' && key != 'JOD2' && key != 'USD' && key != 'USD2') ? (key != 0) ? key * value : 0.5 * value : conversionRate[key] * value;
     });
 }
 
