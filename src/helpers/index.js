@@ -49,7 +49,7 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
 
     try {
         keys.map((note, index) => {
-            numberOfNotesToTake = (note != 0 && note != 'JOD' && note != 'USD') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD') ? 0.1 : Math.floor(difference / 0.5)
+            numberOfNotesToTake = (note && values[index] && note != 0 && note != 'JOD' && note != 'USD') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
 
             if (Number(numberOfNotesToTake) >= 1) {
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
