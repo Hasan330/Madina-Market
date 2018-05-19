@@ -4,16 +4,16 @@ import  {calculateOhda, convertMoneyObjToValuesArray, getMoneyToBeSubmitted, fin
 
 const startingMoneyArr  = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
 
-const ohdaObj           = calculateOhda(startingMoneyObj, moneyToBeKeptObj, ohdaValue, conversionRate);
-const ohdaArr           = convertMoneyObjToValuesArray(ohdaObj, conversionRate);
+const keptMoneyObj      = calculateOhda(startingMoneyObj, moneyToBeKeptObj, ohdaValue, conversionRate);
+const keptMoneyArr      = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
 
-const submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, ohdaObj)
+const submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, keptMoneyObj)
 const submittedMoneyArr = convertMoneyObjToValuesArray(submittedMoneyObj, conversionRate)
 
 
 console.log("\nStarting Money:\n"           , startingMoneyObj, "\n", startingMoneyArr)
-console.log("\nMoney For Next Shift:  \n"   , ohdaObj, "\n", ohdaArr)
+console.log("\nMoney For Next Shift:  \n"   , keptMoneyObj, "\n", keptMoneyArr)
 console.log("\nMoney To Be Submitted: \n"   , submittedMoneyObj, "\n", submittedMoneyArr)
 console.log("Sum of startingMoney     = "   , findSum(startingMoneyObj, conversionRate))
-console.log("Sum of ohdaMoney         = "   , findSum(ohdaObj, conversionRate))
+console.log("Sum of ohdaMoney         = "   , findSum(keptMoneyObj, conversionRate))
 console.log("Sum of submittedMoneyObj = "   , findSum(submittedMoneyObj, conversionRate))

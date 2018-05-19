@@ -1,5 +1,10 @@
 const _ = require('lodash');
 
+
+export function calculateShiftMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate){
+
+}
+
 export function calculateOhda(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate ) {
 
     let currentMoneyToBeKeptValue = 0;
