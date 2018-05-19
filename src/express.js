@@ -1,30 +1,32 @@
-const _ = require('lodash')
-import {ohdaValue, conversionRate, startingMoneyObj, moneyToBeKeptObj} from './mock-data'
-import  {calculateOhda, convertMoneyObjToValuesArray, getMoneyToBeSubmitted, findSum} from './helpers';
+import express from 'express';
+import bodyParser from 'body-parser';
+import {fillStartingMoneyObj, calculateOhda} from './helpers';
+import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
-const startingMoneyArr  = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
+let keptMoneyObj = {}
 
-const keptMoneyObj      = calculateOhda(startingMoneyObj, moneyToBeKeptObj, ohdaValue, conversionRate);
-const keptMoneyArr      = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
+var server = express();
 
-const submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, keptMoneyObj)
-const submittedMoneyArr = convertMoneyObjToValuesArray(submittedMoneyObj, conversionRate)
-
-
-console.log("\nStarting Money:\n"           , startingMoneyObj, "\n", startingMoneyArr)
-console.log("\nMoney For Next Shift:  \n"   , keptMoneyObj, "\n", keptMoneyArr)
-console.log("\nMoney To Be Submitted: \n"   , submittedMoneyObj, "\n", submittedMoneyArr)
-console.log("Sum of startingMoney     = "   , findSum(startingMoneyObj, conversionRate))
-console.log("Sum of ohdaMoney         = "   , findSum(keptMoneyObj, conversionRate))
-console.log("Sum of submittedMoneyObj = "   , findSum(submittedMoneyObj, conversionRate))
-
-var express = require('express')
-var app = express()
+server.set('view engine', 'ejs');
+server.use(bodyParser.urlencoded({extended: true}));
  
-app.get('/', function (req, res) {
-  res.send(startingMoneyObj)
+server.get('/', (req, res) => {
+	res.send("Hello there !")
 })
- 
-app.listen(3000, function(){
+
+server.get('/cash', (req, res) => {
+	res.render('index', {keptMoneyObj})
+})
+
+server.post('/cash', (req, res) => {
+	console.log(req.body)
+	const startingMoneyObj = fillStartingMoneyObj(req.body);
+	keptMoneyObj           = calculateOhda(startingMoneyObj, moneyToBeKeptObj, ohdaValue, conversionRate);
+	console.log('hello', keptMoneyObj);
+
+  	res.render('index', {keptMoneyObj: keptMoneyObj})
+})
+
+server.listen(3000, () => {
 	console.log('Started on port 3000')
 })

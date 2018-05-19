@@ -1,10 +1,5 @@
 const _ = require('lodash');
 
-
-export function calculateShiftMoney(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate){
-
-}
-
 export function calculateOhda(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate ) {
 
     let currentMoneyToBeKeptValue = 0;
@@ -145,4 +140,24 @@ function getArrayIndexFromNoteValue(noteValue) {
             console.log('returing index default')
             break;
     }
+}
+
+export function fillStartingMoneyObj(obj){
+    const startingMoneyObj = {}
+    startingMoneyObj[0]    = obj[0]
+    startingMoneyObj[1]    = obj[1]
+    startingMoneyObj[2]    = obj[2]
+    startingMoneyObj[5]    = obj[5]
+    startingMoneyObj[10]   = obj[10]
+    startingMoneyObj[20]   = obj[20]
+    startingMoneyObj[50]   = obj[50]
+    startingMoneyObj[100]  = obj[100]
+    startingMoneyObj[200]  = obj[200]
+    startingMoneyObj.JOD   = obj.JOD
+    startingMoneyObj.JOD2  = obj.JOD2
+    startingMoneyObj.USD   = obj.USD
+    startingMoneyObj.USD2  = obj.USD2
+
+    console.log("Staring money object is:",  startingMoneyObj);
+    return startingMoneyObj;
 }
