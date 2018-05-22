@@ -4,7 +4,6 @@ import mongoConnectionHelper from './data/mongo-atlas'
 import {fillStartingMoneyObj, calculateOhda} from './helpers';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
-let keptMoneyObj = {}
 
 var server = express();
 
@@ -16,18 +15,27 @@ server.get('/', (req, res) => {
 })
 
 server.get('/cash', (req, res) => {
-	res.render('index', {keptMoneyObj})
+	const keptMoneyObj = {}
+	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
+
+	res.render('index', {keptMoneyObj} )
 })
 
+
+
 server.post('/cash', (req, res) => {
-	console.log(req.body)
-	mongoConnectionHelper();
+	let keptMoneyObj = {};
+
+	console.log("2) keptMoneyObj in beginning of post method is", keptMoneyObj);
+
 
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
-	keptMoneyObj           = calculateOhda(startingMoneyObj, moneyToBeKeptObj, ohdaValue, conversionRate);
-	console.log('hello', keptMoneyObj);
+	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
+	console.log("3) keptMoneyObj in end of post method is", keptMoneyObj)
 
-  	res.render('index', {keptMoneyObj: keptMoneyObj})
+
+	mongoConnectionHelper(keptMoneyObj);
+  	res.render('index', {keptMoneyObj})
 })
 
 server.listen(3000, () => {
