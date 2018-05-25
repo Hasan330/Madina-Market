@@ -178,3 +178,14 @@ export function fillStartingMoneyObj(obj) {
     console.log("Staring money object is:", startingMoneyObj);
     return startingMoneyObj;
 }
+
+export function fillConversionRates(obj){
+    const conversionRate = {}
+    conversionRate['USD']  = obj['USD']
+    conversionRate['USD2'] = obj['USD2']
+    conversionRate['JOD']  = obj['JOD']
+    conversionRate['JOD2'] = obj['JOD2']
+
+    console.log("Conversion rate object is:", conversionRate);
+    return conversionRate;
+}

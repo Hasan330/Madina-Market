@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoConnectionHelper from './data/mongo-atlas'
-import {fillStartingMoneyObj, calculateOhda} from './helpers';
+import {fillStartingMoneyObj, calculateOhda, fillConversionRates} from './helpers';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
@@ -30,7 +30,7 @@ server.post('/cash', (req, res) => {
 
 	console.log("2) keptMoneyObj in beginning of post method is", keptMoneyObj);
 
-
+	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
 	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
 	console.log("3) keptMoneyObj in end of post method is", keptMoneyObj)
