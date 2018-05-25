@@ -9,6 +9,8 @@ var server = express();
 
 server.set('view engine', 'ejs');
 server.use(bodyParser.urlencoded({extended: true}));
+server.use(express.static( __dirname + '/../public'));
+server.set('views', __dirname + '/../views');
  
 server.get('/', (req, res) => {
 	res.send("Hello there !")
