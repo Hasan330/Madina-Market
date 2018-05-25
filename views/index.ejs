@@ -21,53 +21,52 @@
             </br>
             </br>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>تفاصيل العملات</label>
                     </br>
-                    <label>JOD</label>
-                    <input id="JOD-conv" type="number" name="JOD-conv" placeholder="5" step=".01">
-                    <input id="JOD" type="number" name="JOD" placeholder="0">
+                    <label class="lbl">JOD</label>
+                    <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="5" step=".01">
+                    <input class="value-min" id="JOD" type="number" name="JOD" placeholder="0">
                     </br>
-                    <label>USD</label>
-                    <input id="USD-conv" type="number" name="USD-conv" placeholder="3.6" step=".01">
-                    <input id="USD" type="number" name="USD" placeholder="0">
+                    <label class="lbl">USD</label>
+                    <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="3.6" step=".01">
+                    <input class="value-min" id="USD" type="number" name="USD" placeholder="0">
                     </br>
-
-                    <label>JOD2</label>
-                    <input id="JOD2-conv" type="number" name="JOD2-conv" placeholder="5" step=".01">
-                    <input id="JOD2" type="number" name="JOD2" placeholder="0">
+                    <label class="lbl">JOD2</label>
+                    <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="5" step=".01">
+                    <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="0">
                     </br>
-                    <label>USD2</label>
-                    <input id="USD2-conv" type="number" name="USD2-conv" placeholder="3.6" step=".01">
-                    <input id="USD2" type="number" name="USD2" placeholder="0">
+                    <label class="lbl">USD2</label>
+                    <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="3.6" step=".01">
+                    <input class="value-min" id="USD2" type="number" name="USD2" placeholder="0">
                     </br>
                     </br>
-                    <label>200</label>
-                    <input id="200" type="number" name="200" placeholder="0">
+                    <label class="lbl">200</label>
+                    <input class="value" id="200" type="number" name="200" placeholder="0">
                     </br>
-                    <label>100</label>
-                    <input id="100" type="number" name="100" placeholder="0">
+                    <label class="lbl">100</label>
+                    <input class="value" id="100" type="number" name="100" placeholder="0">
                     </br>
-                    <label>50</label>
-                    <input id="50" type="number" name="50" placeholder="0">
+                    <label class="lbl">50</label>
+                    <input class="value" id="50" type="number" name="50" placeholder="0">
                     </br>
-                    <label>20</label>
-                    <input id="20" type="number" name="20" placeholder="0">
+                    <label class="lbl">20</label>
+                    <input class="value" id="20" type="number" name="20" placeholder="0">
                     </br>
-                    <label>10</label>
-                    <input id="10" type="number" name="10" placeholder="0">
+                    <label class="lbl">10</label>
+                    <input class="value" id="10" type="number" name="10" placeholder="0">
                     </br>
-                    <label>5</label>
-                    <input id="5" type="number" name="5" placeholder="0">
+                    <label class="lbl">5</label>
+                    <input class="value" id="5" type="number" name="5" placeholder="0">
                     </br>
-                    <label>2</label>
-                    <input id="2" type="number" name="2" placeholder="0">
+                    <label class="lbl">2</label>
+                    <input class="value" id="2" type="number" name="2" placeholder="0">
                     </br>
-                    <label>1</label>
-                    <input id="1" type="number" name="1" placeholder="0">
+                    <label class="lbl">1</label>
+                    <input class="value" id="1" type="number" name="1" placeholder="0">
                     </br>
-                    <label>0.5</label>
-                    <input id="0" type="number" name="0" placeholder="0">
+                    <label class="lbl">0.5</label>
+                    <input class="value" id="0" type="number" name="0" placeholder="0">
                     </br>
                     </br>
                     <input type="submit" value="OK">
@@ -76,7 +75,7 @@
         <div class="col-md-4">
             <% if(Object.keys(keptMoneyObj).length !== 0){ %>
                 <h2>Money To Be Kept </h2>
-                <label>JOD  --> </label>
+                <label>JOD --> </label>
                 <label id="JOD-value">
                     <%= keptMoneyObj.JOD  %>
                 </label>
@@ -86,7 +85,7 @@
                     <%= keptMoneyObj.JOD2  %>
                 </label>
                 </br>
-                <label>USD  --> </label>
+                <label>USD --> </label>
                 <label id="USD-value">
                     <%= keptMoneyObj.USD  %>
                 </label>
@@ -97,47 +96,47 @@
                 </label>
                 </br>
                 </br>
-                <label>200  --> </label>
+                <label>200 --> </label>
                 <label id="200-value">
                     <%= keptMoneyObj[200]  %>
                 </label>
                 </br>
-                <label>100  --> </label>
+                <label>100 --> </label>
                 <label id="100-value">
                     <%= keptMoneyObj[100]  %>
                 </label>
                 </br>
-                <label>50   --> </label>
+                <label>50 --> </label>
                 <label id="50-value">
                     <%= keptMoneyObj[50]  %>
                 </label>
                 </br>
-                <label>20   --> </label>
+                <label>20 --> </label>
                 <label id="20-value">
                     <%= keptMoneyObj[20]  %>
                 </label>
                 </br>
-                <label>10   --> </label>
+                <label>10 --> </label>
                 <label id="10-value">
                     <%= keptMoneyObj[10]  %>
                 </label>
                 </br>
-                <label>5    --> </label>
+                <label>5 --> </label>
                 <label id="5-value">
                     <%= keptMoneyObj[5]  %>
                 </label>
                 </br>
-                <label>2    --> </label>
+                <label>2 --> </label>
                 <label id="2-value">
                     <%= keptMoneyObj[2]  %>
                 </label>
                 </br>
-                <label>1    --> </label>
+                <label>1 --> </label>
                 <label id="1-value">
                     <%= keptMoneyObj[1]  %>
                 </label>
                 </br>
-                <label>0.5    --> </label>
+                <label>0.5 --> </label>
                 <label id="0-value">
                     <%= keptMoneyObj[0]  %>
                 </label>
