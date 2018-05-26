@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoConnectionHelper from './data/mongo-atlas'
-import {fillStartingMoneyObj, calculateOhda, fillConversionRates, getMoneyToBeSubmitted, findSum} from './helpers';
+import {fillStartingMoneyObj, calculateOhda, fillConversionRates, getMoneyToBeSubmitted, findSum, convertMoneyObjToValuesArray} from './helpers';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
@@ -19,7 +19,9 @@ server.get('/', (req, res) => {
 server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
 	const submittedMoneyObj = {};
-	const startingMoneyObj = {};
+	const startingMoneyObj  = {};
+	const keptMoneyArr      =[];
+	const submittedMoneyArr =[];
 	const startingTotal     = 0;
 	const keptTotal         = 0;
 	const submittedTotal    = 0;
@@ -27,7 +29,7 @@ server.get('/cash', (req, res) => {
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal} )
+	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
 
 
@@ -39,11 +41,20 @@ server.post('/cash', (req, res) => {
 
 	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
+	console.log("\n\n\n\n******\n Conversion Rate: \n", conversionRate);conversionRate
+
+
 	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
+	const keptMoneyArr     = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
+
 	console.log("3) keptMoneyObj in end of post method is", keptMoneyObj)
+	console.log("4) keptMoneyArr in end of post method is", keptMoneyArr)
 
 	submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, keptMoneyObj)
-	console.log("4) submittedMoneyObj in end of post method is", submittedMoneyObj)
+	const submittedMoneyArr = convertMoneyObjToValuesArray(submittedMoneyObj, conversionRate)
+
+	console.log("5) submittedMoneyObj in end of post method is", submittedMoneyObj)
+	console.log("6) submittedMoneyArr in end of post method is", submittedMoneyArr)
 
 	const startingTotal  = findSum(startingMoneyObj, conversionRate)
 	const keptTotal       = findSum(keptMoneyObj, conversionRate)
@@ -52,7 +63,7 @@ server.post('/cash', (req, res) => {
 
 
 	mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal})
+  	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
 
 server.listen(3000, () => {

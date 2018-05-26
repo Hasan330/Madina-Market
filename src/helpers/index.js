@@ -181,10 +181,10 @@ export function fillStartingMoneyObj(obj) {
 
 export function fillConversionRates(obj){
     const conversionRate = {}
-    conversionRate['USD']  = obj['USD']
-    conversionRate['USD2'] = obj['USD2']
-    conversionRate['JOD']  = obj['JOD']
-    conversionRate['JOD2'] = obj['JOD2']
+    conversionRate['USD']  = obj['USD-conv']
+    conversionRate['USD2'] = obj['USD2-conv']
+    conversionRate['JOD']  = obj['JOD-conv']
+    conversionRate['JOD2'] = obj['JOD2-conv']
 
     console.log("Conversion rate object is:", conversionRate);
     return conversionRate;
