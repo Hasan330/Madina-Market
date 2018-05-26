@@ -12,6 +12,50 @@ h1 {
 	width: 23%;
 }
 
+
+.lbl-init {
+	margin-top: 5px;
+	width: 25%;
+}
+
 .lbl {
-	width: 12%;
+	margin-top: 10px;
+	width: 25%;
+}
+
+.lbl-conv {
+	margin-top: 2px;
+	width: 25%;
+}
+
+
+
+.total {
+	margin-top: 10px;
+	width:60%;
+	text-align: right;
+}
+
+.total-min {
+	margin-top: 10px;
+	width:40%;
+	text-align: right;
+}
+
+.tab {
+	width:100%;
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 20px;
+	border-bottom: 4px solid grey;
+}
+
+.left-border {
+	border-left: 6px solid grey;
+}
+
+.align-right {
+	margin-right: 22px;
+	width:50%;
+	float: right;
 }

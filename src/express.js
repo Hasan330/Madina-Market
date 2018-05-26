@@ -20,16 +20,17 @@ server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
 	const submittedMoneyObj = {};
 	const startingMoneyObj  = {};
-	const keptMoneyArr      =[];
-	const submittedMoneyArr =[];
-	const startingTotal     = 0;
-	const keptTotal         = 0;
-	const submittedTotal    = 0;
+	const keptMoneyArr      = [];
+	const startingMoneyArr  = [];
+	const submittedMoneyArr = [];
+	const startingTotal     =  0;
+	const keptTotal         =  0;
+	const submittedTotal    =  0;
 
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+	res.render('index', {startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
 
 
@@ -41,6 +42,8 @@ server.post('/cash', (req, res) => {
 
 	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
+	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
+
 	console.log("\n\n\n\n******\n Conversion Rate: \n", conversionRate);conversionRate
 
 
@@ -63,7 +66,7 @@ server.post('/cash', (req, res) => {
 
 
 	mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {startingMoneyObj, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
+  	res.render('index', {startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
 
 server.listen(3000, () => {
