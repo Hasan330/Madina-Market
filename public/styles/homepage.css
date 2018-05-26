@@ -1,7 +1,11 @@
+body {
+	background-color: orange;
+	font-family: "Courier New";
+}
+
 h1 {
 	font-weight: bold;
 	text-align: center;
-	color: red;
 }
 
 .value {
@@ -15,7 +19,7 @@ h1 {
 
 .lbl-init {
 	margin-top: 5px;
-	width: 25%;
+	width: 20%;
 }
 
 .lbl {
@@ -31,16 +35,20 @@ h1 {
 
 
 .total {
-	margin-top: 10px;
-	width:60%;
-	text-align: right;
+	font-weight: bold;
+	text-align: center;
+	background-color: white; 
+	font-size: 15px;
+	margin-top: 5px;
+	margin-right: 32%;
+	padding: 3px;
+	float: right;
+	border: 2px solid grey;
+	border-radius: 15px;
+	padding: 10px;
+	width: 30%;
 }
 
-.total-min {
-	margin-top: 10px;
-	width:40%;
-	text-align: right;
-}
 
 .tab {
 	width:100%;
