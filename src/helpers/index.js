@@ -180,7 +180,7 @@ export function fillStartingMoneyObj(obj) {
 }
 
 export function fillConversionRates(obj){
-    const conversionRate = {}
+    const conversionRate   = {};
     conversionRate['USD']  = obj['USD-conv']
     conversionRate['USD2'] = obj['USD2-conv']
     conversionRate['JOD']  = obj['JOD-conv']
@@ -188,4 +188,15 @@ export function fillConversionRates(obj){
 
     console.log("Conversion rate object is:", conversionRate);
     return conversionRate;
+}
+
+export function fillMetaData(obj){
+    const metaData = {};
+
+    metaData['userName'] = obj['user_name'];
+    metaData['cashUser'] = obj['cash_user'];
+    metaData['date']     = obj['date'];
+    metaData['period']   = obj['period'];
+
+    return metaData;
 }

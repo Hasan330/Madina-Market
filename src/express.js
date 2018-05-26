@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoConnectionHelper from './data/mongo-atlas'
-import {fillStartingMoneyObj, calculateOhda, fillConversionRates, getMoneyToBeSubmitted, findSum, convertMoneyObjToValuesArray} from './helpers';
+import {fillStartingMoneyObj, calculateOhda, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
@@ -20,6 +20,7 @@ server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
 	const submittedMoneyObj = {};
 	const startingMoneyObj  = {};
+	const metaData          = {};
 	const keptMoneyArr      = [];
 	const startingMoneyArr  = [];
 	const submittedMoneyArr = [];
@@ -30,7 +31,7 @@ server.get('/cash', (req, res) => {
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
 
 
@@ -40,11 +41,12 @@ server.post('/cash', (req, res) => {
 	let submittedMoneyObj = {}
 	console.log("2) keptMoneyObj in beginning of post method is", keptMoneyObj);
 
+	const metaData         = fillMetaData(req.body);
 	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
 	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
 
-	console.log("\n\n\n\n******\n Conversion Rate: \n", conversionRate);conversionRate
+	console.log("\n\n\n\n******\n metaData: \n", metaData);
 
 
 	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
@@ -66,7 +68,7 @@ server.post('/cash', (req, res) => {
 
 
 	mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
+  	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
 
 server.listen(3000, () => {
