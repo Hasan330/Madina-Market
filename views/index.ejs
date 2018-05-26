@@ -21,8 +21,8 @@
             </br>
             </br>
             <div class="row">
-                <div class="col-md-4">
-                    <label>الجرد الفعلي - تفاصيل العملات</label>
+                <div class="col-md-3">
+                    <label> تفاصيل العملات</label>
                     </br>
                     <label class="lbl">JOD</label>
                     <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="سعر الصرف" step=".01">
@@ -69,10 +69,93 @@
                     <input class="form-control" id="0" type="number" name="0" placeholder="العدد">
                     </br>
                     </br>
+                    <label>
+                        <%= startingTotal %>
+                    </label>
+                    </br>
                     <input type="submit" value="OK">
                 </div>
         </form>
-        <div class="col-md-4">
+        
+        <div class="col-md-3">
+            <% if(Object.keys(keptMoneyObj).length !== 0){ %>
+                <label> الجرد الفعلي </label>
+                </br>
+                <label>JOD --> </label>
+                <label id="JOD-value">
+                    <%= startingMoneyObj.JOD  %>
+                </label>
+                </br>
+                <label>JOD2 --> </label>
+                <label id="JOD2-value">
+                    <%= startingMoneyObj.JOD2  %>
+                </label>
+                </br>
+                <label>USD --> </label>
+                <label id="USD-value">
+                    <%= startingMoneyObj.USD  %>
+                </label>
+                </br>
+                <label>USD2 --> </label>
+                <label id="USD2-value">
+                    <%= startingMoneyObj.USD2  %>
+                </label>
+                </br>
+                </br>
+                <label>200 --> </label>
+                <label id="200-value">
+                    <%= startingMoneyObj[200]  %>
+                </label>
+                </br>
+                <label>100 --> </label>
+                <label id="100-value">
+                    <%= startingMoneyObj[100]  %>
+                </label>
+                </br>
+                <label>50 --> </label>
+                <label id="50-value">
+                    <%= startingMoneyObj[50]  %>
+                </label>
+                </br>
+                <label>20 --> </label>
+                <label id="20-value">
+                    <%= startingMoneyObj[20]  %>
+                </label>
+                </br>
+                <label>10 --> </label>
+                <label id="10-value">
+                    <%= startingMoneyObj[10]  %>
+                </label>
+                </br>
+                <label>5 --> </label>
+                <label id="5-value">
+                    <%= startingMoneyObj[5]  %>
+                </label>
+                </br>
+                <label>2 --> </label>
+                <label id="2-value">
+                    <%= startingMoneyObj[2]  %>
+                </label>
+                </br>
+                <label>1 --> </label>
+                <label id="1-value">
+                    <%= startingMoneyObj[1]  %>
+                </label>
+                </br>
+                <label>0.5 --> </label>
+                <label id="0-value">
+                    <%= startingMoneyObj[0]  %>
+                </label>
+                </br>
+                <label>
+                    <%= startingTotal %>
+                </label>
+                </br>
+                <% } %>
+        </div>
+
+
+        <div class="col-md-3">
             <% if(Object.keys(keptMoneyObj).length !== 0){ %>
                 <label> مخصص العهدة</label>
                 </br>
@@ -142,10 +225,13 @@
                     <%= keptMoneyObj[0]  %>
                 </label>
                 </br>
+                <label>
+                    <%= keptTotal %>
+                </label>
+                </br>
                 <% } %>
         </div>
-
-         <div class="col-md-4">
+        <div class="col-md-3">
             <% if(Object.keys(submittedMoneyObj).length !== 0){ %>
                 <label>المبلغ الصافي المرحل </label>
                 </br>
@@ -213,6 +299,10 @@
                 <label>0.5 --> </label>
                 <label id="0-value">
                     <%= submittedMoneyObj[0]  %>
+                </label>
+                </br>
+                <label>
+                    <%= submittedTotal %>
                 </label>
                 </br>
                 <% } %>
