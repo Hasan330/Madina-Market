@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <h1> Madina Market </h1>
-        <form action="/cash/" method="post">
+        <form class="form-inline" action="/cash/" method="post">
             <label>أدخل التفاصيل: </label>
             </br>
             <input id="username" type="text" name="user_name" placeholder="الاسم">
@@ -21,52 +21,52 @@
             </br>
             </br>
             <div class="row">
-                <div class="col-md-6">
-                    <label>تفاصيل العملات</label>
+                <div class="col-md-4">
+                    <label>الجرد الفعلي - تفاصيل العملات</label>
                     </br>
                     <label class="lbl">JOD</label>
-                    <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="5" step=".01">
-                    <input class="value-min" id="JOD" type="number" name="JOD" placeholder="0">
+                    <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="سعر الصرف" step=".01">
+                    <input class="value-min" id="JOD" type="number" name="JOD" placeholder="العدد">
                     </br>
                     <label class="lbl">USD</label>
-                    <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="3.6" step=".01">
-                    <input class="value-min" id="USD" type="number" name="USD" placeholder="0">
+                    <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="سعر الصرف" step=".01">
+                    <input class="value-min" id="USD" type="number" name="USD" placeholder="العدد">
                     </br>
                     <label class="lbl">JOD2</label>
-                    <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="5" step=".01">
-                    <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="0">
+                    <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="سعر الصرف 2" step=".01">
+                    <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="العدد">
                     </br>
                     <label class="lbl">USD2</label>
-                    <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="3.6" step=".01">
-                    <input class="value-min" id="USD2" type="number" name="USD2" placeholder="0">
+                    <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="سعر الصرف 2" step=".01">
+                    <input class="value-min" id="USD2" type="number" name="USD2" placeholder="العدد">
                     </br>
                     </br>
                     <label class="lbl">200</label>
-                    <input class="value" id="200" type="number" name="200" placeholder="0">
+                    <input class="form-control" id="200" type="number" name="200" placeholder="العدد">
                     </br>
                     <label class="lbl">100</label>
-                    <input class="value" id="100" type="number" name="100" placeholder="0">
+                    <input class="form-control value" id="100" type="number" name="100" placeholder="العدد">
                     </br>
                     <label class="lbl">50</label>
-                    <input class="value" id="50" type="number" name="50" placeholder="0">
+                    <input class="form-control" id="50" type="number" name="50" placeholder="العدد">
                     </br>
                     <label class="lbl">20</label>
-                    <input class="value" id="20" type="number" name="20" placeholder="0">
+                    <input class="form-control" id="20" type="number" name="20" placeholder="العدد">
                     </br>
                     <label class="lbl">10</label>
-                    <input class="value" id="10" type="number" name="10" placeholder="0">
+                    <input class="form-control" id="10" type="number" name="10" placeholder="العدد">
                     </br>
                     <label class="lbl">5</label>
-                    <input class="value" id="5" type="number" name="5" placeholder="0">
+                    <input class="form-control" id="5" type="number" name="5" placeholder="العدد">
                     </br>
                     <label class="lbl">2</label>
-                    <input class="value" id="2" type="number" name="2" placeholder="0">
+                    <input class="form-control" id="2" type="number" name="2" placeholder="العدد">
                     </br>
                     <label class="lbl">1</label>
-                    <input class="value" id="1" type="number" name="1" placeholder="0">
+                    <input class="form-control" id="1" type="number" name="1" placeholder="العدد">
                     </br>
                     <label class="lbl">0.5</label>
-                    <input class="value" id="0" type="number" name="0" placeholder="0">
+                    <input class="form-control" id="0" type="number" name="0" placeholder="العدد">
                     </br>
                     </br>
                     <input type="submit" value="OK">
@@ -74,7 +74,8 @@
         </form>
         <div class="col-md-4">
             <% if(Object.keys(keptMoneyObj).length !== 0){ %>
-                <h2>Money To Be Kept </h2>
+                <label> مخصص العهدة</label>
+                </br>
                 <label>JOD --> </label>
                 <label id="JOD-value">
                     <%= keptMoneyObj.JOD  %>
@@ -139,6 +140,79 @@
                 <label>0.5 --> </label>
                 <label id="0-value">
                     <%= keptMoneyObj[0]  %>
+                </label>
+                </br>
+                <% } %>
+        </div>
+
+         <div class="col-md-4">
+            <% if(Object.keys(submittedMoneyObj).length !== 0){ %>
+                <label>المبلغ الصافي المرحل </label>
+                </br>
+                <label>JOD --> </label>
+                <label id="JOD-value">
+                    <%= submittedMoneyObj.JOD  %>
+                </label>
+                </br>
+                <label>JOD2 --> </label>
+                <label id="JOD2-value">
+                    <%= submittedMoneyObj.JOD2  %>
+                </label>
+                </br>
+                <label>USD --> </label>
+                <label id="USD-value">
+                    <%= submittedMoneyObj.USD  %>
+                </label>
+                </br>
+                <label>USD2 --> </label>
+                <label id="USD2-value">
+                    <%= submittedMoneyObj.USD2  %>
+                </label>
+                </br>
+                </br>
+                <label>200 --> </label>
+                <label id="200-value">
+                    <%= submittedMoneyObj[200]  %>
+                </label>
+                </br>
+                <label>100 --> </label>
+                <label id="100-value">
+                    <%= submittedMoneyObj[100]  %>
+                </label>
+                </br>
+                <label>50 --> </label>
+                <label id="50-value">
+                    <%= submittedMoneyObj[50]  %>
+                </label>
+                </br>
+                <label>20 --> </label>
+                <label id="20-value">
+                    <%= submittedMoneyObj[20]  %>
+                </label>
+                </br>
+                <label>10 --> </label>
+                <label id="10-value">
+                    <%= submittedMoneyObj[10]  %>
+                </label>
+                </br>
+                <label>5 --> </label>
+                <label id="5-value">
+                    <%= submittedMoneyObj[5]  %>
+                </label>
+                </br>
+                <label>2 --> </label>
+                <label id="2-value">
+                    <%= submittedMoneyObj[2]  %>
+                </label>
+                </br>
+                <label>1 --> </label>
+                <label id="1-value">
+                    <%= submittedMoneyObj[1]  %>
+                </label>
+                </br>
+                <label>0.5 --> </label>
+                <label id="0-value">
+                    <%= submittedMoneyObj[0]  %>
                 </label>
                 </br>
                 <% } %>
