@@ -6,10 +6,11 @@
 ### User Features:
 
 #### Functionality:
-1) Add shift-metadata  (username, credentials, shiftPeriod, Date)
-2) Add segments for daily Cash purchases and settlements (support positive and negative)
-3) Add segments for total ILS, total JOD and total USD
-4) Add segments for Wataniya and Jawwal + Cards
+ - Add upper limit for coins to be used
+ - Add shift-metadata  (username, credentials, shiftPeriod, Date)
+ - Add segments for daily Cash purchases and settlements (support positive and negative)
+ - Add segments for total ILS, total JOD and total USD
+ - Add segments for Wataniya and Jawwal + Cards
 
 #### Technicalities:
 1) Add data persistence (Firebase)

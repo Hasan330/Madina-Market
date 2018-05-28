@@ -1,29 +1,46 @@
 const _ = require('lodash');
 
-export function calculateOhda(startingMoneyObj, moneyToBeKeptObj, moneyToBeKeptValue, conversionRate ) {
+export function calculateOhda(startingMoneyObj, moneyToBeKeptValue, conversionRate) {
+    const moneyToBeKeptObj = {
+        USD: 0,
+        USD2: 0,
+        JOD: 0,
+        JOD2: 0,
+        200: 0,
+        100: 0,
+        50: 0,
+        20: 0,
+        10: 0,
+        5: 0,
+        2: 0,
+        1: 0,
+        0: 0
+    }
+
+    console.log("Calculating ohda !!");
 
     let currentMoneyToBeKeptValue = 0;
-    let convertedMoneyArray       = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
-    const keys                    = _.keys(startingMoneyObj);
-    
-    for (let i = 0; i < convertedMoneyArray.length; i++) {
-        const currentMoneyLessThanIntended   = (currentMoneyToBeKeptValue < moneyToBeKeptValue) ? true: false
-        if (currentMoneyLessThanIntended) {
-            
-            let noteValue                    = keys[i];
-            moneyToBeKeptObj[noteValue]      = getValueAtCertainPoint(noteValue, startingMoneyObj)
-            currentMoneyToBeKeptValue       += convertedMoneyArray[i]
-        
-        }else {
-            const noteValue                  = keys[i - 1];
-            const diffAmount                 = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
-            const index                      = getArrayIndexFromNoteValue(noteValue);
+    let convertedMoneyArray = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate)
+    const keys = _.keys(startingMoneyObj);
 
-            moneyToBeKeptObj[noteValue]      = startingMoneyObj[noteValue] - diffAmount;
-            convertedMoneyArray[index]      -= (noteValue * diffAmount);
-            currentMoneyToBeKeptValue       -= (noteValue * diffAmount);
-            currentMoneyToBeKeptValue        = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
-            
+    for (let i = 0; i < convertedMoneyArray.length; i++) {
+        const currentMoneyLessThanIntended = (currentMoneyToBeKeptValue < moneyToBeKeptValue) ? true : false
+        if (currentMoneyLessThanIntended) {
+
+            let noteValue               = keys[i];
+            moneyToBeKeptObj[noteValue] = getValueAtCertainPoint(noteValue, startingMoneyObj)
+            currentMoneyToBeKeptValue  += convertedMoneyArray[i]
+
+        } else {
+            const noteValue = keys[i - 1];
+            const diffAmount = getDiff(moneyToBeKeptValue, currentMoneyToBeKeptValue, noteValue);
+            const index = getArrayIndexFromNoteValue(noteValue);
+
+            moneyToBeKeptObj[noteValue] = startingMoneyObj[noteValue] - diffAmount;
+            convertedMoneyArray[index] -= (noteValue * diffAmount);
+            currentMoneyToBeKeptValue -= (noteValue * diffAmount);
+            currentMoneyToBeKeptValue = removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, currentMoneyToBeKeptValue, moneyToBeKeptValue)
+
             break;
         }
     }
@@ -43,9 +60,9 @@ function removeExcessMoney(startingMoneyObj, moneyToBeKeptObj, currentMoneyToBeK
 function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, difference, currentMoneyToBeKeptValue) {
     let numberOfNotesToTake;
     let returnedValue;
-    const keys             = _.reverse(_.keys(startingMoneyObj));
-    const values           = _.reverse(_.values(startingMoneyObj));
-    const BreakException   = {};
+    const keys = _.reverse(_.keys(startingMoneyObj));
+    const values = _.reverse(_.values(startingMoneyObj));
+    const BreakException = {};
 
     try {
         keys.map((note, index) => {
@@ -54,12 +71,12 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
             if (Number(numberOfNotesToTake) >= 1) {
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
 
-                const notesToBeTaken       = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index]; //Take all notes needed if you can, if not take available ones
-                const amountDeducted       = (note != 0) ? notesToBeTaken * note : notesToBeTaken * 0.5;
+                const notesToBeTaken = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index]; //Take all notes needed if you can, if not take available ones
+                const amountDeducted = (note != 0) ? notesToBeTaken * note : notesToBeTaken * 0.5;
 
-                moneyToBeKeptObj[note]    -= notesToBeTaken;
+                moneyToBeKeptObj[note] -= notesToBeTaken;
                 currentMoneyToBeKeptValue += amountDeducted;
-                returnedValue              = difference - amountDeducted
+                returnedValue = difference - amountDeducted
 
                 throw BreakException;
             } else {
@@ -82,7 +99,7 @@ function getValueAtCertainPoint(noteValue, moneyObj) {
 }
 
 export function convertMoneyObjToValuesArray(moneyObj, conversionRate) {
-    const keys   = _.keys(moneyObj);
+    const keys = _.keys(moneyObj);
     const values = _.values(moneyObj);
 
     return _.zipWith(keys, values, function(key, value) {
@@ -91,9 +108,9 @@ export function convertMoneyObjToValuesArray(moneyObj, conversionRate) {
 }
 
 export function getMoneyToBeSubmitted(startingMoneyObj, moneyToBeKeptObj) {
-    const keys                  = _.keys(startingMoneyObj);
+    const keys = _.keys(startingMoneyObj);
     const moneyToBeSubmittedObj = {}
-    
+
     keys.forEach(key => {
         moneyToBeSubmittedObj[key] = startingMoneyObj[key] - moneyToBeKeptObj[key]
     })
@@ -103,7 +120,7 @@ export function getMoneyToBeSubmitted(startingMoneyObj, moneyToBeKeptObj) {
 
 export function findSum(moneyObject, conversionRate) {
     var moneyArr = convertMoneyObjToValuesArray(moneyObject, conversionRate);
-    const total  = moneyArr.reduce((sum, value) => {return sum + value;}, 0)
+    const total = moneyArr.reduce((sum, value) => { return sum + value; }, 0)
     return total;
 }
 
@@ -133,11 +150,65 @@ function getArrayIndexFromNoteValue(noteValue) {
         case 1:
             return 0;
             break;
-        case 0.5:
+        case 0:
             return 8;
             break;
         default:
             console.log('returing index default')
             break;
+    }
+}
+
+export function fillStartingMoneyObj(obj) {
+    const startingMoneyObj = {}
+    startingMoneyObj[0] = obj[0]
+    startingMoneyObj[1] = obj[1]
+    startingMoneyObj[2] = obj[2]
+    startingMoneyObj[5] = obj[5]
+    startingMoneyObj[10] = obj[10]
+    startingMoneyObj[20] = obj[20]
+    startingMoneyObj[50] = obj[50]
+    startingMoneyObj[100] = obj[100]
+    startingMoneyObj[200] = obj[200]
+    startingMoneyObj.JOD = obj.JOD
+    startingMoneyObj.JOD2 = obj.JOD2
+    startingMoneyObj.USD = obj.USD
+    startingMoneyObj.USD2 = obj.USD2
+
+    console.log("Staring money object is:", startingMoneyObj);
+    return startingMoneyObj;
+}
+
+export function fillConversionRates(obj){
+    const conversionRate   = {};
+    conversionRate['USD']  = obj['USD-conv']
+    conversionRate['USD2'] = obj['USD2-conv']
+    conversionRate['JOD']  = obj['JOD-conv']
+    conversionRate['JOD2'] = obj['JOD2-conv']
+
+    console.log("Conversion rate object is:", conversionRate);
+    return conversionRate;
+}
+
+export function fillMetaData(obj){
+    const metaData = {};
+
+    metaData['userName'] = obj['user_name'];
+    metaData['cashUser'] = obj['cash_user'];
+    metaData['date']     = obj['date'];
+    metaData['period']   = obj['period'];
+
+    return metaData;
+}
+
+export function isEmpty(obj){
+    return noMetaData(obj) ? true : false
+
+    function noMetaData(obj){
+        return (!obj.cash_user || !obj.user_name);
+    }
+
+    function noCash(obj){
+        return (!obj[0] && !obj[1] && !obj[2] && !obj[5] && !obj[10] && !obj[20] && !obj[50] && !obj[100] && !obj[200] && !obj.JOD  && !obj.JOD2  && !obj.USD && !obj.USD2)
     }
 }

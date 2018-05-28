@@ -8,7 +8,7 @@ export var conversionRate = {
 }
 
 export const startingMoneyObj = {
-    USD : 0,
+    USD2 : 0,
     USD2: 0,
     JOD : 20,
     JOD2: 10,
