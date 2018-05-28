@@ -200,3 +200,15 @@ export function fillMetaData(obj){
 
     return metaData;
 }
+
+export function isEmpty(obj){
+    return noMetaData(obj) ? true : false
+
+    function noMetaData(obj){
+        return (!obj.cash_user || !obj.user_name);
+    }
+
+    function noCash(obj){
+        return (!obj[0] && !obj[1] && !obj[2] && !obj[5] && !obj[10] && !obj[20] && !obj[50] && !obj[100] && !obj[200] && !obj.JOD  && !obj.JOD2  && !obj.USD && !obj.USD2)
+    }
+}

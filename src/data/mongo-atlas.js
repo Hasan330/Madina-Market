@@ -4,12 +4,12 @@ var uri = 'mongodb+srv://hasan330:sawsan123456@madina-market-ocwnf.mongodb.net/t
 const assert = require('assert');
 
 
-export default function mongoConnectionHelper(obj) {
+export default function mongoConnectionHelper(obj, collectionName) {
 	console.log("\n\n\n\nWriting object ", obj , " to database")
     MongoClient.connect(uri, function(err, client) {
         if (!err) {
             console.log("Connection to mongodb successful !!")
-            const collection = client.db("myDB").collection("money");
+            const collection = client.db("myDB").collection(collectionName);
             // perform actions on the collection object
 
             collection.insertOne(obj)

@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-    
+       <div> 
         <form class="form-inline" action="/cash/" method="post">
             <div class ="right">
                 <select class="form-control" name="period">
@@ -32,53 +32,52 @@
                     </br>
                     <label class="lbl-conv">JOD</label>
                     <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="سعر الصرف" step=".01">
-                    <input class="value-min" id="JOD" type="number" name="JOD" placeholder="العدد">
+                    <input class="value-min" id="JOD" type="number" name="JOD" placeholder="العدد"  <% if(startingMoneyObj.JOD) %> value="<%= startingMoneyObj.JOD %>" >
                     </br>
                     <label class="lbl-conv">USD</label>
                     <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="سعر الصرف" step=".01">
-                    <input class="value-min" id="USD" type="number" name="USD" placeholder="العدد">
+                    <input class="value-min" id="USD" type="number" name="USD" placeholder="العدد" <% if(startingMoneyObj.USD) %> value="<%= startingMoneyObj.USD %>" >
                     </br>
                     <label class="lbl-conv">JOD2</label>
                     <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="سعر الصرف 2" step=".01">
-                    <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="العدد">
+                    <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="العدد" <% if(startingMoneyObj.JOD2) %> value="<%= startingMoneyObj.JOD2 %>" >
                     </br>
                     <label class="lbl-conv">USD2</label>
                     <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="سعر الصرف 2" step=".01">
-                    <input class="value-min" id="USD2" type="number" name="USD2" placeholder="العدد">
+                    <input class="value-min" id="USD2" type="number" name="USD2" placeholder="العدد" <% if(startingMoneyObj.USD2) %> value="<%= startingMoneyObj.USD2 %>" >
                     </br>
                     </br>
                     <label class="lbl-init">200</label>
-                    <input class="form-control" id="200" type="number" name="200" placeholder="العدد">
+                    <input class="form-control" id="200" type="number" name="200" placeholder="العدد" <% if(startingMoneyObj[200]) %> value="<%= startingMoneyObj[200] %>" >
                     </br>
                     <label class="lbl-init">100</label>
-                    <input class="form-control value" id="100" type="number" name="100" placeholder="العدد">
+                    <input class="form-control value" id="100" type="number" name="100" placeholder="العدد" <% if(metaData[100]) %> value="<%= startingMoneyObj[100] %>" >
                     </br>
                     <label class="lbl-init">50</label>
-                    <input class="form-control" id="50" type="number" name="50" placeholder="العدد">
+                    <input class="form-control" id="50" type="number" name="50" placeholder="العدد" <% if(startingMoneyObj[50]) %> value="<%= startingMoneyObj[50] %>" >
                     </br>
                     <label class="lbl-init">20</label>
-                    <input class="form-control" id="20" type="number" name="20" placeholder="العدد">
+                    <input class="form-control" id="20" type="number" name="20" placeholder="العدد" <% if(startingMoneyObj[20]) %> value="<%= startingMoneyObj[20] %>" >
                     </br>
                     <label class="lbl-init">10</label>
-                    <input class="form-control" id="10" type="number" name="10" placeholder="العدد">
+                    <input class="form-control" id="10" type="number" name="10" placeholder="العدد" <% if(startingMoneyObj[10]) %> value="<%= startingMoneyObj[10] %>" >
                     </br>
                     <label class="lbl-init">5</label>
-                    <input class="form-control" id="5" type="number" name="5" placeholder="العدد">
+                    <input class="form-control" id="5" type="number" name="5" placeholder="العدد" <% if(startingMoneyObj[5]) %> value="<%= startingMoneyObj[5] %>" >
                     </br>
                     <label class="lbl-init">2</label>
-                    <input class="form-control" id="2" type="number" name="2" placeholder="العدد">
+                    <input class="form-control" id="2" type="number" name="2" placeholder="العدد" <% if(startingMoneyObj[2]) %> value="<%= startingMoneyObj[2] %>" >
                     </br>
                     <label class="lbl-init">1</label>
-                    <input class="form-control" id="1" type="number" name="1" placeholder="العدد">
+                    <input class="form-control" id="1" type="number" name="1" placeholder="العدد" <% if(startingMoneyObj[1]) %> value="<%= startingMoneyObj[1] %>" >
                     </br>
                     <label class="lbl-init">0.5</label>
-                    <input class="form-control" id="0" type="number" name="0" placeholder="العدد">
+                    <input class="form-control" id="0" type="number" name="0" placeholder="العدد" <% if(startingMoneyObj[0]) %> value="<%= startingMoneyObj[0] %>" >
                     </br>
                     </br>
                     </br>
                     <input class="btn btn-default align-right" type="submit" value="إحسب العهدة">
                 </div>
-        </form>
         <div class="col-md-3 left-border">
             <% if(Object.keys(keptMoneyObj).length !== 0){ %>
                 <label class="tab"> الجرد الفعلي </label>
@@ -452,5 +451,9 @@
                 <% } %>
         </div>
         </div>
+          <input class="btn btn-default submit" type="submit" value="Save" formaction="/save/">
+
+      </form>
+       </div>
     </div>
 </body>

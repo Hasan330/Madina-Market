@@ -97,6 +97,12 @@ img {
     float: right;
 }
 
+.submit {
+    margin-right: 22px;
+    width: 15%;
+    float: right;
+}
+
 .right {
 	/*text-align: center;*/
 	width: 90%;
