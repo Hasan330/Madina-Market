@@ -98,6 +98,7 @@ img {
 }
 
 .submit {
+    margin-top: 20px;
     margin-right: 22px;
     width: 15%;
     float: right;
@@ -109,5 +110,12 @@ img {
 	float: right;
 	margin-bottom: 40px;
 	/*margin-right: 10;*/
+}
 
+.upper-border {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    width:100%;
+    border-top: 6px solid grey;
 }
