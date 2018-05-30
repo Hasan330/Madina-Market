@@ -66,9 +66,10 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
 
     try {
         keys.map((note, index) => {
-            numberOfNotesToTake = (values[index] && note != 0 && note != 'JOD' && note != 'JOD2' && note != 'USD' && note != 'USD2') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || note == 'USD2' || note == 'JOD2' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
+            numberOfNotesToTake = (values[index] != 0 && note != 0 && note != 'JOD' && note != 'JOD2' && note != 'USD' && note != 'USD2') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || note == 'USD2' || note == 'JOD2' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
 
             if (Number(numberOfNotesToTake) >= 1) {
+                //           Success: We could devide       2.5     by    2    at index    10    -->        0         to get          1
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
 
                 const notesToBeTaken = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index]; //Take all notes needed if you can, if not take available ones
@@ -160,7 +161,7 @@ function getArrayIndexFromNoteValue(noteValue) {
 }
 
 export function fillStartingMoneyObj(obj) {
-    const startingMoneyObj = {}
+    let startingMoneyObj = {};
     startingMoneyObj[0] = obj[0]
     startingMoneyObj[1] = obj[1]
     startingMoneyObj[2] = obj[2]

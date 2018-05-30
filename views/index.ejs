@@ -31,19 +31,19 @@
                     <label class="tab"> تفاصيل العملات</label>
                     </br>
                     <label class="lbl-conv">JOD</label>
-                    <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="سعر الصرف" step=".01">
+                    <input class="value-min" id="JOD-conv" type="number" name="JOD-conv" placeholder="سعر الصرف" step=".01"  <% if(conversionRate.JOD) %> value="<%= conversionRate.JOD %>">
                     <input class="value-min" id="JOD" type="number" name="JOD" placeholder="العدد"  <% if(startingMoneyObj.JOD) %> value="<%= startingMoneyObj.JOD %>" >
                     </br>
                     <label class="lbl-conv">USD</label>
-                    <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="سعر الصرف" step=".01">
+                    <input class="value-min" id="USD-conv" type="number" name="USD-conv" placeholder="سعر الصرف" step=".01"  <% if(conversionRate.USD) %> value="<%= conversionRate.USD %>">
                     <input class="value-min" id="USD" type="number" name="USD" placeholder="العدد" <% if(startingMoneyObj.USD) %> value="<%= startingMoneyObj.USD %>" >
                     </br>
                     <label class="lbl-conv">JOD2</label>
-                    <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="سعر الصرف 2" step=".01">
+                    <input class="value-min" id="JOD2-conv" type="number" name="JOD2-conv" placeholder="سعر الصرف 2" step=".01"  <% if(conversionRate.JOD2) %> value="<%= conversionRate.JOD2 %>">
                     <input class="value-min" id="JOD2" type="number" name="JOD2" placeholder="العدد" <% if(startingMoneyObj.JOD2) %> value="<%= startingMoneyObj.JOD2 %>" >
                     </br>
                     <label class="lbl-conv">USD2</label>
-                    <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="سعر الصرف 2" step=".01">
+                    <input class="value-min" id="USD2-conv" type="number" name="USD2-conv" placeholder="سعر الصرف 2" step=".01"  <% if(conversionRate.USD2) %> value="<%= conversionRate.USD2 %>">
                     <input class="value-min" id="USD2" type="number" name="USD2" placeholder="العدد" <% if(startingMoneyObj.USD2) %> value="<%= startingMoneyObj.USD2 %>" >
                     </br>
                     </br>
@@ -454,11 +454,83 @@
 
         <div class="container upper-border">
           <div class="container">
-            Taswiyaat
+             <div class="row">
+              <div class="col-md-3">
+                    <label class="tab"> مدفوعات </label>
+                    </br>
+                    <input class="value-min"  type="number" name="out-value1" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text1" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-2" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-2" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-3" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-3" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-4" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-4" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-5" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-5" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-6" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-6" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-7" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-7" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-8" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-8" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-9" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-9" placeholder="السبب">
+                    </br>
+                    <input class="value-min"  type="number" name="out-value-10" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="out-text-10" placeholder="السبب">
+                    </br>
+                </div>
+
+                 <div class="col-md-3">
+                    <label class="tab"> مقبوضات </label>
+                    </br>
+                    <input class="value-min"  type="number" name="in-value-1" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="in-text-1" placeholder="السبب">
+                    </br>
+                     <input class="value-min"  type="number" name="in-value-2" placeholder="المبلغ"  >
+                    <input class="text"  type="text"        name="in-text-2" placeholder="السبب">
+                    </br>
+                     <input class="value-min"  type="number" name="in-value-3" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-3" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-4" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-4" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-5" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-5" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-6" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-6" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-7" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-7" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-8" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-8" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-9" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-9" placeholder="السبب">
+                    </br> 
+                     <input class="value-min"  type="number" name="in-value-10" placeholder="المبلغ"  >
+                    <input class="text"  type="text"         name="in-text-10" placeholder="السبب">
+                    </br>
+                </div>
+                
+                <div class="col-md-3">
+                    Jawwal w Wataniyya
+                </div>
+            </div>
           </div>
-          <div>
-            Jawwal w Wataniyya
-          </div>
+       
           <input class="btn btn-default submit" type="submit" value="Save" formaction="/save/">
         </div>
 

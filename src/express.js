@@ -18,6 +18,7 @@ server.get('/', (req, res) => {
 
 server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
+	const conversionRate    = {};
 	const submittedMoneyObj = {};
 	const startingMoneyObj  = {};
 	const metaData          = {};
@@ -31,19 +32,22 @@ server.get('/cash', (req, res) => {
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
 
 
 
 server.post('/cash', (req, res) => {
+	let startingMoneyObj  = {};
 	let keptMoneyObj      = {};
 	let submittedMoneyObj = {}
 	console.log("2) keptMoneyObj in beginning of post method is", keptMoneyObj);
+	console.log("2) Starting money object in beginning of post method is", startingMoneyObj);
 
 	const metaData         = fillMetaData(req.body);
 	const conversionRate   = fillConversionRates(req.body);
-	const startingMoneyObj = fillStartingMoneyObj(req.body);
+	
+	startingMoneyObj       = fillStartingMoneyObj(req.body);
 	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
 
 	console.log("\n\n\n\n******\n metaData: \n", metaData);
@@ -68,7 +72,7 @@ server.post('/cash', (req, res) => {
 
 
 	// mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
+  	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
 
 server.post('/save', (req, res) => {
@@ -76,15 +80,17 @@ server.post('/save', (req, res) => {
 	if(isEmpty(req.body)) res.send('Please fill all form fields');
  	
 
-
+	let ins               = {};
+	let outs              = {};
  	let keptMoneyObj      = {};
-	let submittedMoneyObj = {}
+	let submittedMoneyObj = {};
 	console.log("7) keptMoneyObj in beginning of post method is", keptMoneyObj);
 
 	const metaData         = fillMetaData(req.body);
 	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
 	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
+	ins
 
 	console.log("\n\n\n\n******\n metaData: \n", metaData);
 
