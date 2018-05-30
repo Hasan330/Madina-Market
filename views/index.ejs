@@ -453,6 +453,7 @@
         </div>
 
         <div class="container upper-border">
+          <% if(Object.keys(keptMoneyObj).length !== 0){ %>
           <div class="container">
              <div class="row">
               <div class="col-md-3">
@@ -529,9 +530,11 @@
                     Jawwal w Wataniyya
                 </div>
             </div>
+                <% } %>
+
           </div>
        
-          <input class="btn btn-default submit" type="submit" value="Save" formaction="/save/">
+          <input class="btn btn-default submit" type="submit" value="Save"  formaction="/save/"                              <%= (Object.keys(keptMoneyObj).length == 0)? "disabled":"" %>  >
         </div>
 
       </form>

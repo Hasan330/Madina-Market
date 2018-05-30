@@ -16,6 +16,9 @@ server.get('/', (req, res) => {
 	res.send("Hello there !")
 })
 
+
+
+
 server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
 	const conversionRate    = {};
@@ -34,6 +37,8 @@ server.get('/cash', (req, res) => {
 
 	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
+
+
 
 
 
@@ -74,6 +79,11 @@ server.post('/cash', (req, res) => {
 	// mongoConnectionHelper(keptMoneyObj);
   	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
+
+
+
+
+
 
 server.post('/save', (req, res) => {
 
