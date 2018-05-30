@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoConnectionHelper from './data/mongo-atlas'
-import {fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
+import {fillIns, fillOuts, fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
@@ -90,11 +90,12 @@ server.post('/save', (req, res) => {
 	const conversionRate   = fillConversionRates(req.body);
 	const startingMoneyObj = fillStartingMoneyObj(req.body);
 	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
-	ins
+	
 
 	console.log("\n\n\n\n******\n metaData: \n", metaData);
 
-
+	ins                    = fillIns(req.body);
+	outs                   = fillOuts(req.body)
 	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
 	const keptMoneyArr     = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
 
@@ -107,18 +108,22 @@ server.post('/save', (req, res) => {
 	console.log("10) submittedMoneyObj in end of post method is", submittedMoneyObj)
 	console.log("11) submittedMoneyArr in end of post method is", submittedMoneyArr)
 
-	const startingTotal  = findSum(startingMoneyObj, conversionRate)
+	const startingTotal   = findSum(startingMoneyObj, conversionRate)
 	const keptTotal       = findSum(keptMoneyObj, conversionRate)
 	const submittedTotal  = findSum(submittedMoneyObj, conversionRate)
 
 	startingMoneyObj.total = startingTotal;
 	startingMoneyObj.metaData = metaData;
+	startingMoneyObj.ins = ins;
+	startingMoneyObj.outs = outs;
 
 	keptMoneyObj.total = keptTotal;
 	keptMoneyObj.metaData = metaData;
 
 	submittedMoneyObj.total = submittedTotal;
 	submittedMoneyObj.metaData = metaData;
+	submittedMoneyObj.ins = ins;
+	submittedMoneyObj.outs = outs;
 
 	console.log("Req body in save is: ", req.body)
 	

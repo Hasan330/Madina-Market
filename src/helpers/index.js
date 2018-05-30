@@ -213,3 +213,35 @@ export function isEmpty(obj){
         return (!obj[0] && !obj[1] && !obj[2] && !obj[5] && !obj[10] && !obj[20] && !obj[50] && !obj[100] && !obj[200] && !obj.JOD  && !obj.JOD2  && !obj.USD && !obj.USD2)
     }
 }
+
+export function fillIns(obj){
+    const ins   = {}
+    let   total = 0;
+    for(let i=1; i<=10; i++){
+        let text = `in-text-${i}`;
+        let value = `in-value-${i}`;
+
+        total     += Number(obj[value]);
+        ins[text]  = obj[text];
+        ins[value] = Number(obj[value]);
+    }
+    ins.total = total;
+    console.log("Filled ins object with: ", ins);
+    return ins;
+}
+
+export function fillOuts(obj){
+    const outs   = {}
+    let   total = 0;
+    for(let i=1; i<=10; i++){
+        let text = `out-text-${i}`;
+        let value = `out-value-${i}`;
+
+        total     += Number(obj[value]);
+        outs[text]  = obj[text];
+        outs[value] = Number(obj[value]);
+    }
+    outs.total = total;
+    console.log("Filled outs object with: ", outs);
+    return outs;
+}
