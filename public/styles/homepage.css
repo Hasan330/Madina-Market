@@ -103,6 +103,7 @@ img {
     margin-right: 22px;
     width: 15%;
     float: right;
+    font-size: 15px
 }
 
 .right {
@@ -123,4 +124,9 @@ img {
 
 .text {
     margin:2px;
+}
+
+.footer {
+    margin:15px;
+    text-align: center;
 }

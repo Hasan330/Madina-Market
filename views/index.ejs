@@ -76,7 +76,10 @@
                     </br>
                     </br>
                     </br>
-                    <input class="btn btn-default align-right" type="submit" value="إحسب العهدة">
+                    <button class="btn btn-default align-right" type="submit">
+                      إحسب العهدة
+                      <span class= "glyphicon glyphicon-ok"></span>
+                    </button>
                 </div>
         <div class="col-md-3 left-border">
             <% if(Object.keys(keptMoneyObj).length !== 0){ %>
@@ -534,10 +537,17 @@
 
           </div>
        
-          <input class="btn btn-default submit" type="submit" value="Save"  formaction="/save/"                              <%= (Object.keys(keptMoneyObj).length == 0)? "disabled":"" %>  >
+          <button class="btn btn-default submit" type="submit" value="Save"  formaction="/save/" <%= (Object.keys(keptMoneyObj).length == 0)? "disabled":"" %>  >
+            Save
+            <span class= "glyphicon glyphicon-floppy-open"></span>
+          </button>
         </div>
 
       </form>
+       </div>
+       <div class="footer">
+          Madina Markets 2018 
+          <span class= "glyphicon glyphicon-copyright-mark"></span>
        </div>
     </div>
 </body>
