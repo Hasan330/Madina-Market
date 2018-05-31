@@ -93,8 +93,10 @@ img {
 }
 
 .align-right {
+    /*padding:10px;*/
+    text-align: center
     margin-right: 22px;
-    width: 50%;
+    width: 55%;
     float: right;
 }
 

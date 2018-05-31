@@ -6,7 +6,8 @@
 ### User Features:
 
 #### Functionality:
- - [ ] Add upper limit for coins to be used
+ - [ ] Add upper limit for coins to be used  
+			--> After calculating, check final percentage of coins and percentage of paper, then replace coins with paper
  - [x] Add shift-metadata  (username, credentials, shiftPeriod, Date) 
  - [x] Style UI
  - [x] Make sure form fields don't show up as empty after calculations  
@@ -38,3 +39,5 @@
    - Calculates total recieved
 
 6) [ ] Calculate difference between totalReceived and total for entire period
+
+

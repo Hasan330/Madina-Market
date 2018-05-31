@@ -39,6 +39,11 @@ server.get('/cash', (req, res) => {
 })
 
 
+server.get('/login', (req, res) => {
+
+	res.render('login');
+})
+
 
 
 
