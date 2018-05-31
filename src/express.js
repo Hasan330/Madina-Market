@@ -1,12 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoConnectionHelper from './data/mongo-atlas'
+import {mongoConnectionHelper, isAuthenticated} from './data/mongo-atlas'
 import {fillIns, fillOuts, fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
+import { validatePassword } from './helpers/pw-authenticator';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
 var server = express();
-
 server.set('view engine', 'ejs');
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(express.static( __dirname + '/../public'));
@@ -40,8 +40,23 @@ server.get('/cash', (req, res) => {
 
 
 server.get('/login', (req, res) => {
-
 	res.render('login');
+})
+
+
+
+
+server.post('/login', (req, res) => {
+	const {name, password} = req.body;
+
+	console.log("Username is: ", name)
+	console.log("Password is: ", password)
+
+	isAuthenticated(name, password, 'users', function(authenticated){
+		console.log("Authentication Status:", authenticated)
+		authenticated ? res.send("User Authenticated") : res.send("User Unauthenticated")
+
+	})
 })
 
 

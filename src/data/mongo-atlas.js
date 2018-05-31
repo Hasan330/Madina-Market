@@ -1,11 +1,12 @@
 var MongoClient = require('mongodb').MongoClient;
+import { validatePassword } from '../helpers/pw-authenticator'
 var uri = 'mongodb+srv://hasan330:sawsan123456@madina-market-ocwnf.mongodb.net/test';
 
 const assert = require('assert');
 
 
-export default function mongoConnectionHelper(obj, collectionName) {
-	console.log("\n\n\n\nWriting object ", obj , " to database")
+export function mongoConnectionHelper(obj, collectionName) {
+    console.log("\n\n\n\nWriting object ", obj, " to database")
     MongoClient.connect(uri, function(err, client) {
         if (!err) {
             console.log("Connection to mongodb successful !!")
@@ -14,6 +15,34 @@ export default function mongoConnectionHelper(obj, collectionName) {
 
             collection.insertOne(obj)
             client.close();
+        } else {
+            console.log("MongoDB Connection Failure: ", err)
+        }
+    });
+}
+
+
+export async function isAuthenticated(user, passwrod, collectionName, callback) {
+
+    return MongoClient.connect(uri, function(err, client) {
+        if (!err) {
+            console.log("Connection to mongodb successful !!")
+            const collection = client.db("myDB").collection(collectionName);
+
+            collection.findOne({ name: user }, function(error, data) {
+                if (data != null) {
+                    console.log("Found user! ", user);
+                    if (validatePassword(passwrod, data.password)) {
+                        callback(true);
+                    } else {
+                        callback(false)
+
+                    }
+                } else {
+                    callback(false)
+                }
+
+            })
         } else {
             console.log("MongoDB Connection Failure: ", err)
         }
