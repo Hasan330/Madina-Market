@@ -6,7 +6,6 @@ const generatePassword = (password) => {
 
 
 const validatePassword = (password, hashedPassword) => {  
-	console.log(`Comparing ${password} to ${hashedPassword}`)
   return bcrypt.compareSync(password, hashedPassword);
 };
 

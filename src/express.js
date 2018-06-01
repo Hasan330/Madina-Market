@@ -12,9 +12,6 @@ server.use(bodyParser.urlencoded({extended: true}));
 server.use(express.static( __dirname + '/../public'));
 server.set('views', __dirname + '/../views');
  
-server.get('/', (req, res) => {
-	res.send("Hello there !")
-})
 
 
 
@@ -35,7 +32,7 @@ server.get('/cash', (req, res) => {
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+	res.render('calc-cash', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
 })
 
 
@@ -54,9 +51,20 @@ server.post('/login', (req, res) => {
 
 	isAuthenticated(name, password, 'users', function(authenticated){
 		console.log("Authentication Status:", authenticated)
-		authenticated ? res.send("User Authenticated") : res.send("User Unauthenticated")
+		if(authenticated){
+			res.render('pos', {authenticated})	
+		} else{
+			res.redirect("/login")
+		}
 
 	})
+})
+
+server.get('/admin/check-pos', (req, res) => {
+	let authenticated = false;
+
+	res.render('pos', {authenticated});
+
 })
 
 
@@ -97,7 +105,7 @@ server.post('/cash', (req, res) => {
 
 
 	// mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
+  	res.render('calc-cash', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
 
 
@@ -162,6 +170,12 @@ server.post('/save', (req, res) => {
 	mongoConnectionHelper(submittedMoneyObj, 'submittedMoney');
   	res.send('saved')
 })
+
+server.get('*', (req, res) =>{
+	//Return 404 page
+	console.log("You hit an unrecognised route")
+	res.send('You hit an unrecognised route')
+}) 
 
 server.listen(3000, () => {
 	console.log('Started on port 3000')

@@ -31,7 +31,7 @@ export async function isAuthenticated(user, passwrod, collectionName, callback) 
 
             collection.findOne({ name: user }, function(error, data) {
                 if (data != null) {
-                    console.log("Found user! ", user);
+                    // console.log("Found user! ", user);
                     if (validatePassword(passwrod, data.password)) {
                         callback(true);
                     } else {
