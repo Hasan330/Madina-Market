@@ -61,15 +61,15 @@ server.post('/login', (req, res) => {
 
 server.post('/eval-single-day/', (req, res) => {
 	const {date, period} = req.body; 
-	// var momentDate = moment(date).format('DD MM YYYY');
-	// console.log(`Old date is ${date}, Moment date is: ${momentDate}`);
 
 	//find data from database
-	findSingleDayData(date, period, 'shiftData', function(data){
-		console.log("Data inside route, ", data)
+	findSingleDayData(date, period, 'shiftData', function(shiftData){
+		console.log("shiftData inside route, ", shiftData)
+
+		shiftData ? res.render('match-pos-value', {shiftData}) : res.send("No data found for "+ date+ " and period: "+ period)
+
 	})
 
-	console.log("date and period are ", req.body)
 })
 
 
@@ -173,11 +173,11 @@ server.post('/save', (req, res) => {
   	res.send('saved')
 })
 
-server.get('*', (req, res) =>{
-	//Return 404 page
-	console.log("You hit an unrecognised route")
-	res.send('You hit an unrecognised route')
-}) 
+// server.get('*', (req, res) =>{
+// 	//Return 404 page
+// 	console.log("You hit an unrecognised route")
+// 	res.send('You hit an unrecognised route')
+// }) 
 
 server.listen(3000, () => {
 	console.log('Started on port 3000')

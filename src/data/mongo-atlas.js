@@ -34,10 +34,12 @@ export function findSingleDayData(date, period, collectionName, callback) {
                 if (data != null) {
                     console.log("Found data ! ", data);
                     callback(data);
+                    client.close();
                 }
                 else {
                     console.log("No data found: ", error);
                     callback(error);
+                    client.close();
                 }
             })
 
