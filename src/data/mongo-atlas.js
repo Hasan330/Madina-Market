@@ -30,7 +30,7 @@ export function findSingleDayData(date, period, collectionName, callback) {
             console.log("Connection to mongodb successful !!")
             const collection = client.db("myDB").collection(collectionName);
 
-            collection.findOne({ metaData: { date: date, period: period}}, function(error, data) {
+            collection.findOne({ date: date, period: period}, function(error, data) {
                 if (data != null) {
                     console.log("Found data ! ", data);
                     callback(data);

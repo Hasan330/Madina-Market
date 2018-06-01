@@ -1,5 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import moment from 'moment';
+
 import {writeData, findSingleDayData, isAuthenticated} from './data/mongo-atlas'
 import {fillIns, fillOuts, fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
 import { validatePassword } from './helpers/pw-authenticator';
@@ -59,6 +61,8 @@ server.post('/login', (req, res) => {
 
 server.post('/eval-single-day/', (req, res) => {
 	const {date, period} = req.body; 
+	// var momentDate = moment(date).format('DD MM YYYY');
+	// console.log(`Old date is ${date}, Moment date is: ${momentDate}`);
 
 	//find data from database
 	findSingleDayData(date, period, 'shiftData', function(data){
@@ -155,9 +159,14 @@ server.post('/save', (req, res) => {
 	shiftData.startingMoney  = startingMoneyObj;
 	shiftData.keptMoney      = keptMoneyObj;
 	shiftData.submittedMoney = submittedMoneyObj;
-	shiftData.metaData       = metaData;
 	shiftData.ins            = ins;
-	shiftData.outs           = outs;
+	shiftData.outs           = outs;	
+	shiftData.userName 	     = req.body.user_name;
+    shiftData.cashUser 	     = req.body.cash_user;
+    shiftData.date     	     = req.body.date;
+    shiftData.period   	     = req.body.period;
+	// shiftData.metaData       = metaData;
+
 	
 	writeData(shiftData, 'shiftData');
 
