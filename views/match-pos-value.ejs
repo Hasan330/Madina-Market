@@ -401,13 +401,17 @@
                                 <ul class="list-group list-group-flush">
                                     <% for(let i=1; i<=10; i++) {  %>
                                         <% let text = `in-text-${i}`; %>
-                                        <% let value = `in-value-${i}`; %>
-                                        <li class="list-group-item">
-                                            <%= shiftData.ins[text] %> 
-                                        	-->
-                                            <%= shiftData.ins[value] %>
-                                        </li>
-                                    <% } %>
+                                            <% let value = `in-value-${i}`; %>
+                                                <% if(shiftData.ins[text] != "" && shiftData.ins[value] !=0) { %>
+                                                    <li class="list-group-item">
+                                                        <%= shiftData.ins[text] %>
+                                                            -->
+                                                            <%= shiftData.ins[value] %>
+                                                    </li>
+                                                    <% } else { %>
+                                                        <li class="list-group-item"></li>
+                                                        <% } %>
+                                                            <% } %>
                                 </ul>
                                 <label>
                                     _____________________
@@ -425,11 +429,15 @@
                                 <% for(let i=1; i<=10; i++) {  %>
                                     <% let text = `out-text-${i}`; %>
                                         <% let value = `out-value-${i}`; %>
-                                            <li class="list-group-item">
-                                                <%= shiftData.outs[text] %> -->
-                                                    <%= shiftData.outs[value] %>
-                                            </li>
-                                            <% } %>
+                                            <% if(shiftData.outs[text] != "" && shiftData.outs[value] !=0) { %>
+                                                <li class="list-group-item">
+                                                    <%= shiftData.outs[text] %> -->
+                                                        <%= shiftData.outs[value] %>
+                                                </li>
+                                                <% } else { %>
+                                                    <li class="list-group-item"></li>
+                                                    <% } %>
+                                                        <% } %>
                             </ul>
                             <label>
                                 _____________________
