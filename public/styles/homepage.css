@@ -21,8 +21,17 @@ img {
     width: 20%;
 }
 
+.value-min2 {
+    width: 8%;
+    font-size: 15px;
+}
+
 .value-min {
     width: 23%;
+}
+
+.value-lg {
+    width: 32%;
 }
 
 
@@ -38,6 +47,16 @@ img {
 .lbl {
     margin-top: 6px;
     width: 25%;
+    border: solid 2px;
+    border-radius: 3px;
+    text-align: center;
+    color: dimgrey;
+
+}
+
+.lbl-min {
+    margin-top: 6px;
+    width: 7%;
     border: solid 2px;
     border-radius: 3px;
     text-align: center;
@@ -157,7 +176,7 @@ img {
 
 li {
     height: 45px;
-    color: red;
+    color: grey;
 }
 
 .tab-min {
@@ -168,4 +187,20 @@ li {
     margin-bottom: 20px;
     border-bottom: 4px solid grey;
     /*color: grey;*/
+}
+
+.allign-center {
+    text-align: center;
+}
+
+.margin-bottom {
+    margin-bottom:  30px;
+}
+
+.border-self {
+    margin: 2%;
+    padding: 2%;
+    border: solid 2px;
+    border-radius: 3px;
+
 }
