@@ -165,6 +165,9 @@ server.post('/save', (req, res) => {
     shiftData.cashUser 	     = req.body.cash_user;
     shiftData.date     	     = req.body.date;
     shiftData.period   	     = req.body.period;
+    shiftData.startingMoneyArr  = startingMoneyArr;
+    shiftData.keptMoneyArr      = keptMoneyArr;
+    shiftData.submittedMoneyArr = submittedMoneyArr;
 	// shiftData.metaData       = metaData;
 
 	

@@ -1,3 +1,415 @@
-<% if(Object.keys(shiftData).length !== 0){ %>
-	<p> MAthc data </p>
-<% } %>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/styles/homepage.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <% if(Object.keys(shiftData).length !== 0){ %>
+        <h3> Found data for selected date
+            <%= shiftData.date %> and period
+                <%= shiftData.period %>
+        </h3>
+        <div class="container">
+        <div class="row">
+        	
+        	<div class="col-md-3">
+        		<% if(Object.keys(shiftData.keptMoney).length !== 0){ %>
+                <label class="tab"> الجرد الفعلي </label>
+                </br>
+                <label class="lbl-conv">JOD </label>
+                <label class="value" id="JOD-value">
+                    <%= shiftData.startingMoney.JOD  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[9]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD </label>
+                <label class="value" id="USD-value">
+                    <%= shiftData.startingMoney.USD  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[11]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">JOD2 </label>
+                <label class="value" id="JOD2-value">
+                    <%= shiftData.startingMoney.JOD2  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[10]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD2 </label>
+                <label class="value" id="USD2-value">
+                    <%= shiftData.startingMoney.USD2  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[12]  %>
+                </label>
+                </br>
+                </br>
+                <label class="lbl">200 </label>
+                <label class="value" id="200-value">
+                    <%= shiftData.startingMoney[200]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[8]  %>
+                </label>
+                </br>
+                <label class="lbl">100 </label>
+                <label class="value" id="100-value">
+                    <%= shiftData.startingMoney[100]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[7]  %>
+                </label>
+                </br>
+                <label class="lbl">50 </label>
+                <label class="value" id="50-value">
+                    <%= shiftData.startingMoney[50]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[6]  %>
+                </label>
+                </br>
+                <label class="lbl">20 </label>
+                <label class="value" id="20-value">
+                    <%= shiftData.startingMoney[20]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[5]  %>
+                </label>
+                </br>
+                <label class="lbl">10 </label>
+                <label class="value" id="10-value">
+                    <%= shiftData.startingMoney[10]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[4]  %>
+                </label>
+                </br>
+                <label class="lbl">5 </label>
+                <label class="value" id="5-value">
+                    <%= shiftData.startingMoney[5]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[3]  %>
+                </label>
+                </br>
+                <label class="lbl">2 </label>
+                <label class="value" id="2-value">
+                    <%= shiftData.startingMoney[2]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[2]  %>
+                </label>
+                </br>
+                <label class="lbl">1 </label>
+                <label class="value" id="1-value">
+                    <%= shiftData.startingMoney[1]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[1]  %>
+                </label>
+                </br>
+                <label class="lbl">0.5 </label>
+                <label class="value" id="0-value">
+                    <%= shiftData.startingMoney[0]  %>
+                </label>
+                </label>
+                <label class="value">
+                    <%= shiftData.startingMoneyArr[0]  %>
+                </label>
+                </br>
+                <label>
+                    _______________________
+                </label>
+                </br>
+                <label class="total-lbl">
+                    Total
+                </label>
+                <label class="total">
+                    <%= shiftData.startingMoney.total %>
+                </label>
+                </br>
+                <% } %>
+        	</div>
+
+
+           <div class="col-md-3 left-border">
+            <% if(Object.keys(shiftData.keptMoney).length !== 0){ %>
+                <label class="tab"> مخصص العهدة</label>
+                </br>
+                <label class="lbl-conv">JOD </label>
+                <label class="value" id="JOD-value">
+                    <%= shiftData.keptMoney.JOD  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[9]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD </label>
+                <label class="value" id="USD-value">
+                    <%= shiftData.keptMoney.USD  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[11]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">JOD2 </label>
+                <label class="value" id="JOD2-value">
+                    <%= shiftData.keptMoney.JOD2  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[10]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD2 </label>
+                <label class="value" id="USD2-value">
+                    <%= shiftData.keptMoney.USD2  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[12]  %>
+                </label>
+                </br>
+                </br>
+                <label class="lbl">200 </label>
+                <label class="value" id="200-value">
+                    <%= shiftData.keptMoney[200]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[8]  %>
+                </label>
+                </br>
+                <label class="lbl">100 </label>
+                <label class="value" id="100-value">
+                    <%= shiftData.keptMoney[100]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[7]  %>
+                </label>
+                </br>
+                <label class="lbl">50 </label>
+                <label class="value" id="50-value">
+                    <%= shiftData.keptMoney[50]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[6]  %>
+                </label>
+                </br>
+                <label class="lbl">20 </label>
+                <label class="value" id="20-value">
+                    <%= shiftData.keptMoney[20]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[5]  %>
+                </label>
+                </br>
+                <label class="lbl">10 </label>
+                <label class="value" id="10-value">
+                    <%= shiftData.keptMoney[10]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[4]  %>
+                </label>
+                </br>
+                <label class="lbl">5 </label>
+                <label class="value" id="5-value">
+                    <%= shiftData.keptMoney[5]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[3]  %>
+                </label>
+                </br>
+                <label class="lbl">2 </label>
+                <label class="value" id="2-value">
+                    <%= shiftData.keptMoney[2]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[2]  %>
+                </label>
+                </br>
+                <label class="lbl">1 </label>
+                <label class="value" id="1-value">
+                    <%= shiftData.keptMoney[1]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[1]  %>
+                </label>
+                </br>
+                <label class="lbl">0.5 </label>
+                <label class="value" id="0-value">
+                    <%= shiftData.keptMoney[0]  %>
+                </label>
+                <label class="value">
+                    <%= shiftData.keptMoneyArr[0]  %>
+                </label>
+                </br>
+                <label>
+                    _______________________
+                </label>
+                </br>
+                <label class="total">
+                    <%= shiftData.keptMoney.total %>
+                </label>
+                </br>
+                <% } %>
+        </div>
+
+        <div class="col-md-3 left-border rounded">
+            <% if(Object.keys(shiftData.submittedMoney).length !== 0){ %>
+                <label class="tab">المبلغ الصافي المرحل </label>
+                </br>
+                <label class="lbl-conv">JOD </label>
+                <label class="value" id="JOD-value">
+                    <%= shiftData.submittedMoney.JOD  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[9]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD </label>
+                <label class="value" id="USD-value">
+                    <%= shiftData.submittedMoney.USD  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[11]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">JOD2 </label>
+                <label class="value" id="JOD2-value">
+                    <%= shiftData.submittedMoney.JOD2  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[10]  %>
+                </label>
+                </br>
+                <label class="lbl-conv">USD2 </label>
+                <label class="value" id="USD2-value">
+                    <%= shiftData.submittedMoney.USD2  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[12]  %>
+                </label>
+                </br>
+                </br>
+                <label class="lbl">200 </label>
+                <label class="value" id="200-value">
+                    <%= shiftData.submittedMoney[200]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[8]  %>
+                </label>
+                </br>
+                <label class="lbl">100 </label>
+                <label class="value" id="100-value">
+                    <%= shiftData.submittedMoney[100]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[7]  %>
+                </label>
+                </br>
+                <label class="lbl">50 </label>
+                <label class="value" id="50-value">
+                    <%= shiftData.submittedMoney[50]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[6]  %>
+                </label>
+                </br>
+                <label class="lbl">20 </label>
+                <label class="value" id="20-value">
+                    <%= shiftData.submittedMoney[20]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[5]  %>
+                </label>
+                </br>
+                <label class="lbl">10 </label>
+                <label class="value" id="10-value">
+                    <%= shiftData.submittedMoney[10]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[4]  %>
+                </label>
+                </br>
+                <label class="lbl">5 </label>
+                <label class="value" id="5-value">
+                    <%= shiftData.submittedMoney[5]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[3]  %>
+                </label>
+                </br>
+                <label class="lbl">2 </label>
+                <label class="value" id="2-value">
+                    <%= shiftData.submittedMoney[2]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[2]  %>
+                </label>
+                </br>
+                <label class="lbl">1 </label>
+                <label class="value" id="1-value">
+                    <%= shiftData.submittedMoney[1]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[1]  %>
+                </label>
+                </br>
+                <label class="lbl">0.5 </label>
+                <label class="value" id="0-value">
+                    <%= shiftData.submittedMoney[0]  %>
+                </label>
+                <label>
+                    <%= shiftData.submittedMoneyArr[0]  %>
+                </label>
+                </br>
+                <label>
+                    _____________________
+                </label>
+                </br>
+                <label class="total">
+                    <%= shiftData.submittedMoney.total %>
+                </label>
+                </br>
+                <% } %>
+        </div>
+
+
+        <div class="col-md-3">
+        	<ul>
+        		<% for(let i=1; i<=10; i++) {  %>
+					<% let text = `in-text-${i}`; %>
+        			<% let value = `in-value-${i}`; %>
+       				<li> <%= shiftData.ins[text] %> --> <%= shiftData.ins[value] %> </li>
+       			<% } %>
+       		</ul>
+        </div>
+
+
+
+
+        <% } %>
+    </div>
+</body>
+
+</html>
