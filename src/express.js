@@ -64,14 +64,16 @@ server.post('/eval-single-day/', (req, res) => {
 
 	//find data from database
 	findSingleDayData(date, period, 'shiftData', function(shiftData){
-		console.log("shiftData inside route, ", shiftData)
-
 		shiftData ? res.render('match-pos-value', {shiftData}) : res.send("No data found for "+ date+ " and period: "+ period)
-
 	})
 
 })
 
+//Saves the daily pos actual value against cash value
+server.post('/daily-pos', (req, res) => {
+	const {posValue, id} = req.body;
+	savePosValueToDatabase(id, )
+})
 
 
 server.get('/admin/check-pos', (req, res) => {
@@ -80,8 +82,6 @@ server.get('/admin/check-pos', (req, res) => {
 	res.render('pos', {authenticated});
 
 })
-
-
 
 
 server.post('/cash', (req, res) => {
@@ -119,8 +119,6 @@ server.post('/cash', (req, res) => {
 
   	res.render('calc-cash', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
-
-
 
 
 

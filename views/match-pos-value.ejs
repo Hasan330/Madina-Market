@@ -4,32 +4,39 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title> Match POS Value </title>
+    <script src="/js/match-pos-value.js"></script>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/styles/homepage.css" rel="stylesheet" type="text/css">
-
     <nav class="navbar navbar-default">
         <h1>  Madina <img src="https://scontent.fjrs2-1.fna.fbcdn.net/v/t1.0-9/10520641_1403300713301670_6676082635920823261_n.jpg?_nc_cat=0&_nc_eui2=AeFHwbYEgGS3RZhcLkN8w2p6imVg8wUGK3xZil0i34ak67mqi4WGuM_xRX4h_7H7ApF_I5UrSrylB0SI_ZXA6y-5ULcZFaLioU4t4zcgZlPtVw&oh=d4f4a7a2509e74ab38aea7abdd2236ce&oe=5BBF267B" alt="أسواق المدينة" height="150" width="150" class="img-circle" align="middle"> Market </h1>
-      </nav>
+    </nav>
 </head>
 
 <body>
     <% if(Object.keys(shiftData).length !== 0){ %>
-    <div class="allign-center margin-bottom border-self">
-    	
-        <!-- <h3> Shift Metadata </h3> -->
-		<label class="lbl-min"> Name: </label>
-		<label class="value-min2" > <%= shiftData.userName %>  </label>
-		<label class="lbl-min"> Cash:  </label>
-		<label class="value-min2" > <%= shiftData.cashUser %>  </label>
-		<label class="lbl-min"> Date:  </label>
-		<label class="value-min2" > <%= shiftData.date %>  </label>
-		<label class="lbl-min"> Period:  </label>
-		<label class="value-min2" > <%= shiftData.period %> </label>
-    </div>
-
-
+        
         <div class="container">
+        	<div class="allign-center margin-bottom border-self">
+            <!-- <h3> Shift Metadata </h3> -->
+            <label class="lbl-min"> Name: </label>
+            <label class="value-min2">
+                <%= shiftData.userName %>
+            </label>
+            <label class="lbl-min"> Cash: </label>
+            <label class="value-min2">
+                <%= shiftData.cashUser %>
+            </label>
+            <label class="lbl-min"> Date: </label>
+            <label class="value-min2">
+                <%= shiftData.date %>
+            </label>
+            <label class="lbl-min"> Period: </label>
+            <label class="value-min2">
+                <%= shiftData.period %>
+            </label>
+        </div>
             <div class="row">
                 <div class="col-md-7">
                     <div class='row'>
@@ -409,8 +416,33 @@
                 </div>
                 <div class="col-md-5">
                     <div class="row">
+                        <div class="col-md-6 left-border">
+                            <label class="tab-min"> مدفوعات </label>
+                            <ul class="list-group list-group-flush">
+                                <% for(let i=1; i<=10; i++) {  %>
+                                    <% let text = `out-text-${i}`; %>
+                                        <% let value = `out-value-${i}`; %>
+                                            <% if(shiftData.outs[text] != "" && shiftData.outs[value] !=0) { %>
+                                                <li class="list-group-item">
+                                                    <%= shiftData.outs[text] %> |
+                                                        <%= shiftData.outs[value] %>
+                                                </li>
+                                                <% } else { %>
+                                                    <li class="list-group-item"></li>
+                                                    <% } %>
+                                                        <% } %>
+                            </ul>
+                            <label>
+                                _____________________
+                            </label>
+                            </br>
+                            <label class="total-min">
+                                <%= shiftData.outs.total %>
+                            </label>
+                            </br>
+                        </div>
                         <div class="col-md-6">
-                            <label class="tab-min"> Ins </label>
+                            <label class="tab-min"> مقبوضات </label>
                             <div class="ins-outs">
                                 <ul class="list-group list-group-flush">
                                     <% for(let i=1; i<=10; i++) {  %>
@@ -436,65 +468,44 @@
                                 </br>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="tab-min"> Outs </label>
-                            <ul class="list-group list-group-flush">
-                                <% for(let i=1; i<=10; i++) {  %>
-                                    <% let text = `out-text-${i}`; %>
-                                        <% let value = `out-value-${i}`; %>
-                                            <% if(shiftData.outs[text] != "" && shiftData.outs[value] !=0) { %>
-                                                <li class="list-group-item">
-                                                    <%= shiftData.outs[text] %> |
-                                                        <%= shiftData.outs[value] %>
-                                                </li>
-                                                <% } else { %>
-                                                    <li class="list-group-item"></li>
-                                                    <% } %>
-                                                        <% } %>
-                            </ul>
-                            <label>
-                                _____________________
-                            </label>
-                            </br>
-                            <label class="total-min">
-                                <%= shiftData.outs.total %>
-                            </label>
-                            </br>
-                        </div>
                     </div>
                 </div>
                 <% } %>
             </div>
             <div class="row upper-border">
-                <<form action="save-initial-check" method="post" accept-charset="utf-8">
-                    <table class="table">
+                <form action="/daily-pos" method="post" accept-charset="utf-8">
+                    <table class="table allign-center">
                         <tr>
-                            <th>Total Without Ins And Outs</th>
-                            <th>Ins And Outs Total</th>
-                            <th>Total With Ins And Outs </th>
-                            <th> POS Value </th>
+                            <th class="allign-center">Cash Total</th>
+                            <th class="allign-center">Ins And Outs Total</th>
+                            <th class="allign-center"> Period Total </th>
+                            <th class="allign-center"> POS Value </th>
                         </tr>
                         <tr>
                             <td>
-                                <%= shiftData.startingMoney.total  %>
+                                <%= shiftData.submittedMoney.total  %>
                             </td>
                             <td>
                                 <%= shiftData.outs.total -  shiftData.ins.total  %>
                             </td>
                             <td>
-                                <%= shiftData.startingMoney.total + (shiftData.outs.total -  shiftData.ins.total)  %>
+                                <%= shiftData.submittedMoney.total + (shiftData.outs.total -  shiftData.ins.total)  %>
                             </td>
                             <td>
-                                <input class="value-lg" type="number" name="out-value-1" placeholder="المبلغ"> </td>
+                                <input class="value-lg" type="number" id='POS-value' name="posValue" placeholder="المبلغ"> </td>
                         </tr>
                     </table>
+                    <input name="id" value="<%= shiftData._id %>" readonly>
+
                     <button class="btn btn-default submit" type="submit" value="Save">
-                     Save 
-                     <span class="glyphicon glyphicon-floppy-open">
+                        Save
+                        <span class="glyphicon glyphicon-floppy-open">
                         </span>
                     </button>
                     </form>
             </div>
 </body>
+
+<% console.log("EJS") %>
 
 </html>

@@ -198,8 +198,9 @@ li {
 }
 
 .border-self {
-    margin: 2%;
-    padding: 2%;
+    height: 60px;
+    padding-top: 1%;
+    width: 100%;
     border: solid 2px;
     border-radius: 3px;
 

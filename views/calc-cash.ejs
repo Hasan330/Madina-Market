@@ -17,8 +17,8 @@
         <form class="form-inline" action="/cash/" method="post">
             <div class ="right">
                 <select class="form-control" name="period">
-                    <option value="morning"  <%= metaData.period == 'morning' ? 'selected' : ''%>>صباحي</option>
-                    <option value="evening"  <%= metaData.period == 'evening' ? 'selected' : ''%>>مسائي</option>
+                    <option value="Morning"  <%= metaData.period == 'Morning' ? 'selected' : ''%>>صباحي</option>
+                    <option value="Evening"  <%= metaData.period == 'Evening' ? 'selected' : ''%>>مسائي</option>
                 </select>
                 <input id="date" class="form-control" type="date" name="date" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" placeholder="التاريخ" <% if(metaData.date) %> value="<%= metaData.date %>">
                 <input id="cash_user" class="form-control" type="text" name="cash_user" placeholder="صندوق" <% if(metaData.cashUser) %> value="<%= metaData.cashUser %>" >

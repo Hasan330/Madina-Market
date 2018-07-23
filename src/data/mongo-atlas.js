@@ -30,17 +30,16 @@ export function findSingleDayData(date, period, collectionName, callback) {
             console.log("Connection to mongodb successful !!")
             const collection = client.db("myDB").collection(collectionName);
 
-            collection.findOne({ date: date, period: period}, function(error, data) {
+            collection.findOne({ date: date, period: period }, function(error, data) {
                 if (data != null) {
                     console.log("Found data ! ", data);
                     callback(data);
-                    client.close();
-                }
-                else {
+                } else {
                     console.log("No data found: ", error);
                     callback(error);
-                    client.close();
                 }
+                client.close();
+
             })
 
         } else {
@@ -50,7 +49,33 @@ export function findSingleDayData(date, period, collectionName, callback) {
 }
 
 
-export async function isAuthenticated(user, passwrod, collectionName, callback) {
+export function updatePOSValue(id, collectionName, callback) {
+    MongoClient.connect(uri, function(err, client) {
+        if (!err) {
+            console.log("Connection to mongodb successful !!")
+            const collection = client.db("myDB").collection(collectionName);
+
+            collection.findOne({ id }, function(error, data) {
+                if (data != null) {
+                    console.log("Found data ! ", data);
+                    callback(data);
+                } else {
+                    console.log("No data found: ", error);
+                    callback(error);
+                }
+                client.close();
+            })
+
+        } else {
+            console.log("MongoDB Connection Failure: ", err)
+        }
+    });
+}
+
+
+
+
+export function isAuthenticated(user, passwrod, collectionName, callback) {
 
     return MongoClient.connect(uri, function(err, client) {
         if (!err) {
