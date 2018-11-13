@@ -1,23 +1,26 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoConnectionHelper from './data/mongo-atlas'
-import {fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
+import moment from 'moment';
+
+import {writeData, findSingleDayData, isAuthenticated} from './data/mongo-atlas'
+import {fillIns, fillOuts, fillStartingMoneyObj, calculateOhda, isEmpty, fillConversionRates, getMoneyToBeSubmitted, fillMetaData, findSum, convertMoneyObjToValuesArray} from './helpers';
+import { validatePassword } from './helpers/pw-authenticator';
 import {ohdaValue, conversionRate, moneyToBeKeptObj} from './mock-data'
 
 
 var server = express();
-
 server.set('view engine', 'ejs');
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(express.static( __dirname + '/../public'));
 server.set('views', __dirname + '/../views');
  
-server.get('/', (req, res) => {
-	res.send("Hello there !")
-})
+
+
+
 
 server.get('/cash', (req, res) => {
 	const keptMoneyObj      = {};
+	const conversionRate    = {};
 	const submittedMoneyObj = {};
 	const startingMoneyObj  = {};
 	const metaData          = {};
@@ -31,19 +34,67 @@ server.get('/cash', (req, res) => {
 
 	console.log("1) keptMoneyObj in beginning of get method is",  keptMoneyObj);
 
-	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+	res.render('calc-cash', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr} )
+})
+
+
+server.get('/login', (req, res) => {
+	res.render('login');
 })
 
 
 
+
+server.post('/login', (req, res) => {
+	const {name, password} = req.body;
+
+	isAuthenticated(name, password, 'users', function(authenticated){
+		console.log("Authentication Status:", authenticated)
+		if(authenticated){
+			res.render('pos', {authenticated})	
+		} else{
+			res.redirect("/login")
+		}
+
+	})
+})
+
+server.post('/eval-single-day/', (req, res) => {
+	const {date, period} = req.body; 
+
+	//find data from database
+	findSingleDayData(date, period, 'shiftData', function(shiftData){
+		shiftData ? res.render('match-pos-value', {shiftData}) : res.send("No data found for "+ date+ " and period: "+ period)
+	})
+
+})
+
+//Saves the daily pos actual value against cash value
+server.post('/daily-pos', (req, res) => {
+	const {posValue, id} = req.body;
+	savePosValueToDatabase(id, )
+})
+
+
+server.get('/admin/check-pos', (req, res) => {
+	let authenticated = false;
+
+	res.render('pos', {authenticated});
+
+})
+
+
 server.post('/cash', (req, res) => {
+	let startingMoneyObj  = {};
 	let keptMoneyObj      = {};
 	let submittedMoneyObj = {}
 	console.log("2) keptMoneyObj in beginning of post method is", keptMoneyObj);
+	console.log("2) Starting money object in beginning of post method is", startingMoneyObj);
 
 	const metaData         = fillMetaData(req.body);
 	const conversionRate   = fillConversionRates(req.body);
-	const startingMoneyObj = fillStartingMoneyObj(req.body);
+	
+	startingMoneyObj       = fillStartingMoneyObj(req.body);
 	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
 
 	console.log("\n\n\n\n******\n metaData: \n", metaData);
@@ -66,61 +117,68 @@ server.post('/cash', (req, res) => {
 	const submittedTotal  = findSum(submittedMoneyObj, conversionRate)
 
 
-
-	// mongoConnectionHelper(keptMoneyObj);
-  	res.render('index', {metaData, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
+  	res.render('calc-cash', {metaData, conversionRate, startingMoneyObj, startingMoneyArr, keptMoneyObj, submittedMoneyObj, startingTotal, keptTotal, submittedTotal, submittedMoneyArr, keptMoneyArr})
 })
+
+
+
 
 server.post('/save', (req, res) => {
 
 	if(isEmpty(req.body)) res.send('Please fill all form fields');
  	
+	const shiftData         = {};
+	let ins                 = {};
+	let outs                = {};
+ 	let keptMoneyObj        = {};
+	let submittedMoneyObj   = {};
 
+	const metaData          = fillMetaData(req.body);
+	const conversionRate    = fillConversionRates(req.body);
+	const startingMoneyObj  = fillStartingMoneyObj(req.body);
+	const startingMoneyArr  = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
 
- 	let keptMoneyObj      = {};
-	let submittedMoneyObj = {}
-	console.log("7) keptMoneyObj in beginning of post method is", keptMoneyObj);
+	ins                     = fillIns(req.body);
+	outs                    = fillOuts(req.body)
+	keptMoneyObj            = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
+	const keptMoneyArr      = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
 
-	const metaData         = fillMetaData(req.body);
-	const conversionRate   = fillConversionRates(req.body);
-	const startingMoneyObj = fillStartingMoneyObj(req.body);
-	const startingMoneyArr = convertMoneyObjToValuesArray(startingMoneyObj, conversionRate);
-
-	console.log("\n\n\n\n******\n metaData: \n", metaData);
-
-
-	keptMoneyObj           = calculateOhda(startingMoneyObj, ohdaValue, conversionRate);
-	const keptMoneyArr     = convertMoneyObjToValuesArray(keptMoneyObj, conversionRate);
-
-	console.log("8) keptMoneyObj in end of post method is", keptMoneyObj)
-	console.log("9) keptMoneyArr in end of post method is", keptMoneyArr)
-
-	submittedMoneyObj = getMoneyToBeSubmitted(startingMoneyObj, keptMoneyObj)
+	submittedMoneyObj       = getMoneyToBeSubmitted(startingMoneyObj, keptMoneyObj)
 	const submittedMoneyArr = convertMoneyObjToValuesArray(submittedMoneyObj, conversionRate)
 
-	console.log("10) submittedMoneyObj in end of post method is", submittedMoneyObj)
-	console.log("11) submittedMoneyArr in end of post method is", submittedMoneyArr)
+	const startingTotal     = findSum(startingMoneyObj, conversionRate)
+	const keptTotal         = findSum(keptMoneyObj, conversionRate)
+	const submittedTotal    = findSum(submittedMoneyObj, conversionRate)
 
-	const startingTotal  = findSum(startingMoneyObj, conversionRate)
-	const keptTotal       = findSum(keptMoneyObj, conversionRate)
-	const submittedTotal  = findSum(submittedMoneyObj, conversionRate)
-
-	startingMoneyObj.total = startingTotal;
-	startingMoneyObj.metaData = metaData;
-
-	keptMoneyObj.total = keptTotal;
-	keptMoneyObj.metaData = metaData;
-
+	startingMoneyObj.total  = startingTotal;
+	keptMoneyObj.total      = keptTotal;
 	submittedMoneyObj.total = submittedTotal;
-	submittedMoneyObj.metaData = metaData;
 
-	console.log("Req body in save is: ", req.body)
+	shiftData.startingMoney  = startingMoneyObj;
+	shiftData.keptMoney      = keptMoneyObj;
+	shiftData.submittedMoney = submittedMoneyObj;
+	shiftData.ins            = ins;
+	shiftData.outs           = outs;	
+	shiftData.userName 	     = req.body.user_name;
+    shiftData.cashUser 	     = req.body.cash_user;
+    shiftData.date     	     = req.body.date;
+    shiftData.period   	     = req.body.period;
+    shiftData.startingMoneyArr  = startingMoneyArr;
+    shiftData.keptMoneyArr      = keptMoneyArr;
+    shiftData.submittedMoneyArr = submittedMoneyArr;
+	// shiftData.metaData       = metaData;
+
 	
-	mongoConnectionHelper(startingMoneyObj, 'initialMoney');
-	mongoConnectionHelper(keptMoneyObj, 'keptMoney');
-	mongoConnectionHelper(submittedMoneyObj, 'submittedMoney');
+	writeData(shiftData, 'shiftData');
+
   	res.send('saved')
 })
+
+// server.get('*', (req, res) =>{
+// 	//Return 404 page
+// 	console.log("You hit an unrecognised route")
+// 	res.send('You hit an unrecognised route')
+// }) 
 
 server.listen(3000, () => {
 	console.log('Started on port 3000')

@@ -66,9 +66,10 @@ function specifyNoteToSubtractFrom(startingMoneyObj, moneyToBeKeptObj, differenc
 
     try {
         keys.map((note, index) => {
-            numberOfNotesToTake = (values[index] && note != 0 && note != 'JOD' && note != 'JOD2' && note != 'USD' && note != 'USD2') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || note == 'USD2' || note == 'JOD2' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
+            numberOfNotesToTake = (values[index] != 0 && note != 0 && note != 'JOD' && note != 'JOD2' && note != 'USD' && note != 'USD2') ? Math.floor(difference / note) : (note == 'JOD' || note == 'USD' || note == 'USD2' || note == 'JOD2' || values[index] == 0) ? 0.1 : Math.floor(difference / 0.5)
 
             if (Number(numberOfNotesToTake) >= 1) {
+                //           Success: We could devide       2.5     by    2    at index    10    -->        0         to get          1
                 console.log(`Success: We could devide ${difference} by ${note} at index ${index} -->  ${values[index]} to get ${numberOfNotesToTake}`)
 
                 const notesToBeTaken = (values[index] >= numberOfNotesToTake) ? numberOfNotesToTake : values[index]; //Take all notes needed if you can, if not take available ones
@@ -160,7 +161,7 @@ function getArrayIndexFromNoteValue(noteValue) {
 }
 
 export function fillStartingMoneyObj(obj) {
-    const startingMoneyObj = {}
+    let startingMoneyObj = {};
     startingMoneyObj[0] = obj[0]
     startingMoneyObj[1] = obj[1]
     startingMoneyObj[2] = obj[2]
@@ -211,4 +212,36 @@ export function isEmpty(obj){
     function noCash(obj){
         return (!obj[0] && !obj[1] && !obj[2] && !obj[5] && !obj[10] && !obj[20] && !obj[50] && !obj[100] && !obj[200] && !obj.JOD  && !obj.JOD2  && !obj.USD && !obj.USD2)
     }
+}
+
+export function fillIns(obj){
+    const ins   = {}
+    let   total = 0;
+    for(let i=1; i<=10; i++){
+        let text = `in-text-${i}`;
+        let value = `in-value-${i}`;
+
+        total     += Number(obj[value]);
+        ins[text]  = obj[text];
+        ins[value] = Number(obj[value]);
+    }
+    ins.total = total;
+    console.log("Filled ins object with: ", ins);
+    return ins;
+}
+
+export function fillOuts(obj){
+    const outs   = {}
+    let   total = 0;
+    for(let i=1; i<=10; i++){
+        let text = `out-text-${i}`;
+        let value = `out-value-${i}`;
+
+        total     += Number(obj[value]);
+        outs[text]  = obj[text];
+        outs[value] = Number(obj[value]);
+    }
+    outs.total = total;
+    console.log("Filled outs object with: ", outs);
+    return outs;
 }
